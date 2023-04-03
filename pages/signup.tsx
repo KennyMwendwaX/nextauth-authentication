@@ -7,8 +7,8 @@ export default function Signup() {
   return (
     <>
       <Head>
-        <title>Sign In</title>
-        <meta name="description" content="Sign In page" />
+        <title>Sign Un</title>
+        <meta name="description" content="Sign Up page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
