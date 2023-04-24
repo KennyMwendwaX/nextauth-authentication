@@ -1,7 +1,7 @@
-import Head from "next/head"
-import Image from "next/image"
-import Link from "next/link"
-import Img from "@/public/image.jpg"
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import Img from "@/public/image.jpg";
 
 export default function Signup() {
   return (
@@ -20,7 +20,7 @@ export default function Signup() {
           Iconic
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-fit xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <div className="p-6 space-y-3 md:space-y-5 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign up to have an account
             </h1>
@@ -34,7 +34,11 @@ export default function Signup() {
                 &nbsp;Sign up with Github
               </button>
             </div>
-
+            <div className="flex items-center">
+              <div className="border border-gray-400 w-1/2"></div>
+              <div className="px-3 text-gray-400">or</div>
+              <div className="border border-gray-400 w-1/2"></div>
+            </div>
             <form className="space-y-3 md:space-y-4" action="#">
               <div>
                 <label
@@ -99,5 +103,5 @@ export default function Signup() {
         </div>
       </div>
     </>
-  )
+  );
 }

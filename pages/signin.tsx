@@ -1,7 +1,7 @@
-import Head from "next/head"
-import Image from "next/image"
-import Link from "next/link"
-import Img from "@/public/image.jpg"
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import Img from "@/public/image.jpg";
 
 export default function Signin() {
   return (
@@ -33,6 +33,11 @@ export default function Signin() {
                 <img className="w-5 h-5" src="/github-48.png" />
                 &nbsp;Login with Github
               </button>
+            </div>
+            <div className="flex items-center">
+              <div className="border border-gray-400 w-1/2"></div>
+              <div className="px-3 text-gray-400">or</div>
+              <div className="border border-gray-400 w-1/2"></div>
             </div>
             <form className="space-y-4 md:space-y-4" action="#">
               <div>
@@ -108,5 +113,5 @@ export default function Signin() {
         </div>
       </div>
     </>
-  )
+  );
 }
