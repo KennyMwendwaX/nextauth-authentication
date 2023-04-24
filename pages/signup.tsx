@@ -25,11 +25,11 @@ export default function Signup() {
               Sign up to have an account
             </h1>
             <div className="flex justify-between space-x-2">
-              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-50 px-4 py-2">
+              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
                 <img className="w-5 h-5" src="/google-48.png" />
                 &nbsp;Sign up with Google
               </button>
-              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-50 px-4 py-2">
+              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
                 <img className="w-5 h-5" src="/github-48.png" />
                 &nbsp;Sign up with Github
               </button>
