@@ -19,22 +19,22 @@ export default function Signin() {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
           <Image className="w-8 h-8 mr-2" src={Img} alt="logo" />
           Iconic
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
             <div className="flex justify-between">
               <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
-                <img className="w-5 h-5" src="/google-48.png" />
+                <Image width={20} height={20} alt="google" src="/google.svg" />
                 &nbsp;Login with Google
               </button>
               <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
-                <img className="w-5 h-5" src="/github-48.png" />
+                <Image width={20} height={20} alt="github" src="/github.svg" />
                 &nbsp;Login with Github
               </button>
             </div>
@@ -47,18 +47,18 @@ export default function Signin() {
               <div className="relative">
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900">
                   Your email
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                   placeholder="name@company.com"
                   required
                 />
-                <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer">
+                <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
@@ -69,16 +69,18 @@ export default function Signin() {
                   Password
                 </label>
                 <input
-                  type={showPassword ? `password` : `text`}
+                  type={!showPassword ? `password` : `text`}
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900  focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                   required
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer">
+                  className={`${
+                    !showPassword ? `text-gray-600` : `text-blue-600`
+                  } absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
@@ -90,7 +92,7 @@ export default function Signin() {
                       aria-describedby="remember"
                       name="remember"
                       type="checkbox"
-                      className="w-4 h-4 bg-gray-50 rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 bg-gray-50 rounded border-gray-300"
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -103,20 +105,20 @@ export default function Signin() {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                  className="text-sm font-medium text-blue-600 hover:underline">
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Sign in
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-gray-500">
                 Don&apos;t have an account?
                 <Link
                   href="/signup"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                  className="font-medium text-blue-600 hover:underline">
                   &nbsp;Sign Up
                 </Link>
               </p>
