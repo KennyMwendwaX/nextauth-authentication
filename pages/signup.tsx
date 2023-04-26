@@ -5,6 +5,7 @@ import Img from "@/public/image.jpg";
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useFormik } from "formik";
+import { signupFormValidate } from "@/utils/validate";
 
 type formValues = {
   email: string;
@@ -22,6 +23,7 @@ export default function Signup() {
       password: "",
       confirm_password: "",
     },
+    validate: signupFormValidate,
     onSubmit,
   });
 
@@ -76,7 +78,11 @@ export default function Signup() {
                 <input
                   type="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                  className={`${
+                    formik.errors.email
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   placeholder="name@company.com"
                   required
                   {...formik.getFieldProps("email")}
@@ -85,6 +91,11 @@ export default function Signup() {
                   <HiAtSymbol size={20} />
                 </span>
               </div>
+              {formik.errors.email && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.email}
+                </span>
+              )}
               <div className="relative">
                 <label
                   htmlFor="password"
@@ -95,7 +106,11 @@ export default function Signup() {
                   type={!showPassword ? `password` : `text`}
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                  className={`${
+                    formik.errors.password
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   required
                   {...formik.getFieldProps("password")}
                 />
@@ -107,6 +122,11 @@ export default function Signup() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
+              {formik.errors.password && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.password}
+                </span>
+              )}
               <div className="relative">
                 <label
                   htmlFor="confirm_password"
@@ -117,7 +137,11 @@ export default function Signup() {
                   type={!showConfirmPassword ? `password` : `text`}
                   id="confirm_password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                  className={`${
+                    formik.errors.confirm_password
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   required
                   {...formik.getFieldProps("confirm_password")}
                 />
@@ -129,6 +153,11 @@ export default function Signup() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
+              {formik.errors.confirm_password && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.confirm_password}
+                </span>
+              )}
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
