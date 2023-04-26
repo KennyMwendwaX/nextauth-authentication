@@ -1,4 +1,5 @@
 type FormErrors = {
+  username?: string;
   email?: string;
   password?: string;
   confirm_password?: string;
@@ -8,6 +9,13 @@ import { z } from "zod";
 
 const signupformSchema = z
   .object({
+    username: z
+      .string({
+        required_error: "Username is required",
+        invalid_type_error: "Username must be a string",
+      })
+      .min(5, { message: "Username must be greater than 5 characters long" })
+      .max(20, { message: "Username must be less than 20 characters long" }),
     email: z
       .string({
         required_error: "Email is required",
@@ -52,6 +60,7 @@ const signinformSchema = z.object({
 });
 
 export function signupFormValidate(values: {
+  username: string;
   email: string;
   password: string;
   confirm_password: string;
@@ -63,6 +72,7 @@ export function signupFormValidate(values: {
     const formErrors = result.error.format();
 
     const errors: FormErrors = {
+      username: formErrors.username?._errors[0],
       email: formErrors.email?._errors[0],
       password: formErrors.password?._errors[0],
       confirm_password: formErrors.confirm_password?._errors[0],

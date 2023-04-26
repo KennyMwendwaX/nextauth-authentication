@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Img from "@/public/image.jpg";
 import { useState } from "react";
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
+import { HiAtSymbol, HiFingerPrint, HiUser } from "react-icons/hi";
 import { useFormik } from "formik";
 import { signupFormValidate } from "@/utils/validate";
 
@@ -19,6 +19,7 @@ export default function Signup() {
 
   const formik = useFormik({
     initialValues: {
+      username: "",
       email: "",
       password: "",
       confirm_password: "",
@@ -39,6 +40,7 @@ export default function Signup() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
@@ -46,34 +48,46 @@ export default function Signup() {
           <Image className="w-8 h-8 mr-2" src={Img} alt="logo" />
           Iconic
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-fit xl:p-0">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-3 md:space-y-5 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign up to have an account
             </h1>
-            <div className="flex justify-between space-x-2">
-              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
-                <Image width={20} height={20} alt="google" src="/google.svg" />
-                &nbsp;Sign up with Google
-              </button>
-              <button className="inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
-                <Image width={20} height={20} alt="github" src="/github.svg" />
-                &nbsp;Sign up with Github
-              </button>
-            </div>
-            <div className="flex items-center">
-              <div className="border border-gray-400 w-1/2"></div>
-              <div className="px-3 text-gray-400">or</div>
-              <div className="border border-gray-400 w-1/2"></div>
-            </div>
             <form
               className="space-y-3 md:space-y-4"
               onSubmit={formik.handleSubmit}>
               <div className="relative">
                 <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium text-gray-900">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  className={`${
+                    formik.errors.username
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  placeholder="John Doe"
+                  required
+                  {...formik.getFieldProps("username")}
+                />
+                <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
+                  <HiUser size={20} />
+                </span>
+              </div>
+              {formik.errors.username && (
+                <span className="text-red-600 text-xs">
+                  {formik.errors.username}
+                </span>
+              )}
+              <div className="relative">
+                <label
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900">
-                  Your email
+                  Email
                 </label>
                 <input
                   type="email"
@@ -82,24 +96,24 @@ export default function Signup() {
                     formik.errors.email
                       ? `focus:border-red-600`
                       : `focus:border-blue-600`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
-                  placeholder="name@company.com"
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  placeholder="johndoe@gmail.com"
                   required
                   {...formik.getFieldProps("email")}
                 />
-                <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
+                <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
               {formik.errors.email && (
-                <span className="text-red-600 text-sm">
+                <span className="text-red-600 text-xs">
                   {formik.errors.email}
                 </span>
               )}
               <div className="relative">
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900">
                   Password
                 </label>
                 <input
@@ -110,7 +124,7 @@ export default function Signup() {
                     formik.errors.password
                       ? `focus:border-red-600`
                       : `focus:border-blue-600`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("password")}
                 />
@@ -118,12 +132,12 @@ export default function Signup() {
                   onClick={() => setShowPassword(!showPassword)}
                   className={`${
                     !showPassword ? `text-gray-600` : `text-blue-600`
-                  } absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer`}>
+                  } absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
               {formik.errors.password && (
-                <span className="text-red-600 text-sm">
+                <span className="text-red-600 text-xs">
                   {formik.errors.password}
                 </span>
               )}
@@ -141,7 +155,7 @@ export default function Signup() {
                     formik.errors.confirm_password
                       ? `focus:border-red-600`
                       : `focus:border-blue-600`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("confirm_password")}
                 />
@@ -149,12 +163,12 @@ export default function Signup() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className={`${
                     !showConfirmPassword ? `text-gray-600` : `text-blue-600`
-                  } absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer`}>
+                  } absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
               {formik.errors.confirm_password && (
-                <span className="text-red-600 text-sm">
+                <span className="text-red-600 text-xs">
                   {formik.errors.confirm_password}
                 </span>
               )}

@@ -1,9 +1,9 @@
 import "@/styles/global.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const poppins = Poppins({
+const roboto = Roboto({
   weight: ["400"],
   subsets: ["latin"],
 });
@@ -13,7 +13,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <main className={poppins.className}>
+    <main className={roboto.className}>
       <div className="bg-gray-100 min-h-screen">
         <SessionProvider session={session}>
           <Component {...pageProps} />
