@@ -4,10 +4,31 @@ import Link from "next/link";
 import Img from "@/public/image.jpg";
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
+import { useFormik } from "formik";
+
+type formValues = {
+  email: string;
+  password: string;
+  confirm_password: string;
+};
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirm_password: "",
+    },
+    onSubmit,
+  });
+
+  async function onSubmit(values: formValues) {
+    console.log(values);
+  }
+
   return (
     <>
       <Head>
@@ -43,7 +64,9 @@ export default function Signup() {
               <div className="px-3 text-gray-400">or</div>
               <div className="border border-gray-400 w-1/2"></div>
             </div>
-            <form className="space-y-3 md:space-y-4" action="#">
+            <form
+              className="space-y-3 md:space-y-4"
+              onSubmit={formik.handleSubmit}>
               <div className="relative">
                 <label
                   htmlFor="email"
@@ -52,11 +75,11 @@ export default function Signup() {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                   placeholder="name@company.com"
                   required
+                  {...formik.getFieldProps("email")}
                 />
                 <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
@@ -70,11 +93,11 @@ export default function Signup() {
                 </label>
                 <input
                   type={!showPassword ? `password` : `text`}
-                  name="password"
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                   required
+                  {...formik.getFieldProps("password")}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
@@ -86,17 +109,17 @@ export default function Signup() {
               </div>
               <div className="relative">
                 <label
-                  htmlFor="confirm-password"
+                  htmlFor="confirm_password"
                   className="block mb-2 text-sm font-medium text-gray-900">
                   Confirm Password
                 </label>
                 <input
                   type={!showConfirmPassword ? `password` : `text`}
-                  name="confirm-password"
-                  id="confirm-password"
+                  id="confirm_password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                   required
+                  {...formik.getFieldProps("confirm_password")}
                 />
                 <span
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}

@@ -4,9 +4,30 @@ import Link from "next/link";
 import Img from "@/public/image.jpg";
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
+import { useFormik } from "formik";
+import { signinFormValidate } from "@/utils/validate";
+
+type formValues = {
+  email: string;
+  password: string;
+};
 
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: signinFormValidate,
+    onSubmit,
+  });
+
+  console.log(formik.errors);
+
+  async function onSubmit(values: formValues) {
+    console.log(values);
+  }
 
   return (
     <>
@@ -43,7 +64,9 @@ export default function Signin() {
               <div className="px-3 text-gray-400">or</div>
               <div className="border border-gray-400 w-1/2"></div>
             </div>
-            <form className="space-y-4 md:space-y-4" action="#">
+            <form
+              className="space-y-4 md:space-y-4"
+              onSubmit={formik.handleSubmit}>
               <div className="relative">
                 <label
                   htmlFor="email"
@@ -52,16 +75,25 @@ export default function Signin() {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                  className={`${
+                    formik.errors.email
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   placeholder="name@company.com"
                   required
+                  {...formik.getFieldProps("email")}
                 />
                 <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
+              {formik.errors.email && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.email}
+                </span>
+              )}
               <div className="relative">
                 <label
                   htmlFor="password"
@@ -70,11 +102,15 @@ export default function Signin() {
                 </label>
                 <input
                   type={!showPassword ? `password` : `text`}
-                  name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900  focus:outline-none focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                  className={`${
+                    formik.errors.password
+                      ? `focus:border-red-600`
+                      : `focus:border-blue-600`
+                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   required
+                  {...formik.getFieldProps("password")}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
@@ -84,6 +120,11 @@ export default function Signin() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
+              {formik.errors.password && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.password}
+                </span>
+              )}
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">

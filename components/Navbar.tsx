@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -26,8 +27,10 @@ export default function Navbar() {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom">
               <span className="sr-only">Open user menu</span>
-              <img
-                className="w-8 h-8 rounded-full"
+              <Image
+                className="rounded-full"
+                width={32}
+                height={32}
                 src="/profile-picture-3.jpg"
                 alt="user photo"
               />
