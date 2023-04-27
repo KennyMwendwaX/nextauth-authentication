@@ -22,8 +22,22 @@ export default async function handler(
   });
 
   if (userExists)
-    return res.status(422).json({ message: "User already exists" });
+    return res.status(422).json({ message: "Email already registered" });
 
   // Hash the password
-  const hashedPassword = bcrypt.hash(password, 10);
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  const user = await prisma.user.create({
+    data: {
+      username: username,
+      email: email,
+      password: hashedPassword,
+    },
+  });
+
+  if (user) {
+    return res.status(201).json({ message: "User registered" });
+  } else {
+    return res.status(500).json({ message: "Server error" });
+  }
 }
