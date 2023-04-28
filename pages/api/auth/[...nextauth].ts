@@ -1,14 +1,13 @@
 import { prisma } from "@/utils/db";
 import { compare } from "bcrypt";
-import NextAuth from "next-auth/next";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 type MyCredentials = {
   email: string;
   password: string;
 };
-
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
       name: "Credentials",
@@ -41,4 +40,6 @@ export default NextAuth({
       },
     }),
   ],
-});
+};
+
+export default NextAuth(authOptions);
