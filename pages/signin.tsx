@@ -6,6 +6,9 @@ import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useFormik } from "formik";
 import { signinFormValidate } from "@/utils/validate";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 type formValues = {
   email: string;
@@ -14,6 +17,8 @@ type formValues = {
 
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,10 +28,33 @@ export default function Signin() {
     onSubmit,
   });
 
-  console.log(formik.errors);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  if (session) {
+    router.replace("/");
+    return null;
+  }
 
   async function onSubmit(values: formValues) {
-    console.log(values);
+    try {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false, // Do not redirect, so we can handle the result ourselves
+      });
+
+      if (result?.error) {
+        // If there was an error, display the error message to the user
+        setErrorMessage(result.error);
+      } else {
+        // If there was no error, redirect the user to the home page
+        router.push("/");
+      }
+    } catch (error) {
+      // If there was an unexpected error, display a generic error message to the user
+      setErrorMessage("An unexpected error occurred. Please try again later.");
+    }
   }
 
   return (
@@ -50,6 +78,15 @@ export default function Signin() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
+
+            {errorMessage && (
+              <div
+                className="p-4 mb-4 text-sm border border-red-600 text-red-800 rounded-lg bg-red-50"
+                role="alert">
+                {errorMessage}
+              </div>
+            )}
+
             <form
               className="space-y-4 md:space-y-4"
               onSubmit={formik.handleSubmit}>

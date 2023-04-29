@@ -45,7 +45,7 @@ export default function Signup() {
     );
 
     console.log(register);
-    if (register.status === 422) {
+    if (register.status === 409) {
       setErrors(["Email is already registered"]);
     }
 

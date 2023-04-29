@@ -26,7 +26,7 @@ export default async function handler(
   });
 
   if (userExists)
-    return res.status(422).json({ message: "Email already registered" });
+    return res.status(409).json({ message: "Email already registered" });
 
   // Hash the password
   const hashedPassword = bcrypt.hashSync(password, 10);
