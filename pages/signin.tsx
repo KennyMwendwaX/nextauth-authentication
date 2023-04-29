@@ -67,7 +67,7 @@ export default function Signin() {
                       ? `focus:border-red-600`
                       : `focus:border-blue-600`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
-                  placeholder="name@company.com"
+                  placeholder="johndoe@gmail.com"
                   required
                   {...formik.getFieldProps("email")}
                 />
@@ -151,7 +151,7 @@ export default function Signin() {
               </p>
             </form>
             <div>
-              <button className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
+              <button className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2 mb-2">
                 <Image width={20} height={20} alt="google" src="/google.svg" />
                 &nbsp;Sign in with Google
               </button>

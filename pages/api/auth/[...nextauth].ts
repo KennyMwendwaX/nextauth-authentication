@@ -7,6 +7,7 @@ type MyCredentials = {
   email: string;
   password: string;
 };
+
 export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({

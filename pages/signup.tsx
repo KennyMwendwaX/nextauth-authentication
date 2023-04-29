@@ -17,6 +17,7 @@ type formValues = {
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -42,7 +43,17 @@ export default function Signup() {
       "http://localhost:3000/api/auth/register",
       options
     );
-    if (register.status === 201) router.push("http://localhost:3000/signin");
+
+    console.log(register);
+    if (register.status === 422) {
+      setErrors(["Email is already registered"]);
+    }
+
+    console.log(errors[0]);
+
+    if (register.status === 201) {
+      router.push("http://localhost:3000/signin");
+    }
   }
 
   return (
@@ -120,8 +131,11 @@ export default function Signup() {
               </div>
               {formik.errors.email && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.email}
+                  {formik.errors.email} {errors[0]}
                 </span>
+              )}
+              {errors.length > 0 && (
+                <span className="text-red-600 text-xs">{errors[0]}</span>
               )}
               <div className="relative">
                 <label
