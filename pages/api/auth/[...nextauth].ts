@@ -37,7 +37,10 @@ export const authOptions: NextAuthOptions = {
         if (!checkPassword)
           throw new Error("Username or password doesn't match");
 
-        return user;
+        return {
+          ...user,
+          name: user.username,
+        };
       },
     }),
   ],

@@ -7,6 +7,7 @@ import { HiAtSymbol, HiFingerPrint, HiUser } from "react-icons/hi";
 import { useFormik } from "formik";
 import { signupFormValidate } from "@/utils/validate";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 type formValues = {
   email: string;
@@ -19,8 +20,6 @@ export default function Signup() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const router = useRouter();
-
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -31,6 +30,14 @@ export default function Signup() {
     validate: signupFormValidate,
     onSubmit,
   });
+
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  if (session) {
+    router.replace("/");
+    return null;
+  }
 
   async function onSubmit(values: formValues) {
     const options = {
@@ -44,15 +51,12 @@ export default function Signup() {
       options
     );
 
-    console.log(register);
     if (register.status === 409) {
       setErrors(["Email is already registered"]);
     }
 
-    console.log(errors[0]);
-
     if (register.status === 201) {
-      router.push("http://localhost:3000/signin");
+      router.replace("/signin");
     }
   }
 

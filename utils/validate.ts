@@ -55,8 +55,7 @@ const signinformSchema = z.object({
       invalid_type_error: "Password must be a string",
     })
     .min(8, { message: "Password must be greater than 8 characters long" })
-    .max(20, { message: "Password must be less than 20 characters long" })
-    .refine((value) => !/\s/.test(value), "Invalid Password"), // whitespace or tab check
+    .max(20, { message: "Password must be less than 20 characters long" }),
 });
 
 export function signupFormValidate(values: {
