@@ -6,9 +6,8 @@ import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useFormik } from "formik";
 import { signinFormValidate } from "@/utils/validate";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 type formValues = {
   email: string;
@@ -88,7 +87,7 @@ export default function Signin() {
             )}
 
             <form
-              className="space-y-4 md:space-y-4"
+              className="space-y-4 md:space-y-1"
               onSubmit={formik.handleSubmit}>
               <div className="relative">
                 <label
@@ -178,14 +177,6 @@ export default function Signin() {
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Sign In
               </button>
-              <p className="text-sm font-light text-gray-500">
-                Don&apos;t have an account?
-                <Link
-                  href="/signup"
-                  className="font-medium text-blue-600 hover:underline">
-                  &nbsp;Sign Up
-                </Link>
-              </p>
             </form>
             <div>
               <button className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2 mb-2">
@@ -197,6 +188,14 @@ export default function Signin() {
                 &nbsp;Sign in with Github
               </button>
             </div>
+            <p className="text-sm font-light text-gray-500">
+              Don&apos;t have an account?
+              <Link
+                href="/signup"
+                className="font-medium text-blue-600 hover:underline">
+                &nbsp;Sign Up
+              </Link>
+            </p>
           </div>
         </div>
       </div>
