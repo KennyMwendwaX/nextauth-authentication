@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar />
+        <Navbar session={session} />
         {!session && (
           <div className="mt-4">
             <div>You are not signed in</div>
@@ -31,9 +31,7 @@ export default function Home() {
           <div className="mt-4">
             Welcome {session.user.name}, {session.user.email}
             <button
-              onClick={() => {
-                signOut();
-              }}
+              onClick={() => signOut()}
               className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
               Sign Out
             </button>

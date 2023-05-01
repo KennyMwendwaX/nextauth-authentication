@@ -1,8 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { HiUser, HiLogout } from "react-icons/hi";
+import type { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 
-export default function Navbar() {
+type NavbarProps = {
+  session: Session | null;
+};
+
+export default function Navbar({ session }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -17,63 +24,62 @@ export default function Navbar() {
               Iconic
             </span>
           </Link>
-          <div className="flex items-center md:order-2">
-            <button
-              type="button"
-              className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded={isMenuOpen}
-              onClick={toggleMenu}
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom">
-              <span className="sr-only">Open user menu</span>
-              <Image
-                className="rounded-full"
-                width={32}
-                height={32}
-                src="/profile-picture-3.jpg"
-                alt="user photo"
-              />
-            </button>
-            {/* Dropdown menu */}
-            <div
-              className={`z-50 ${
-                isMenuOpen ? "" : "hidden"
-              } fixed top-8 right-6 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
-              id="user-dropdown">
-              <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                  name@flowbite.com
-                </span>
+          {!session ? (
+            <></>
+          ) : (
+            <div className="flex items-center md:order-2">
+              <button
+                type="button"
+                className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+                id="user-menu-button"
+                aria-expanded={isMenuOpen}
+                onClick={toggleMenu}
+                data-dropdown-toggle="user-dropdown"
+                data-dropdown-placement="bottom">
+                <span className="sr-only">Open user menu</span>
+                <Image
+                  className="rounded-full"
+                  width={32}
+                  height={32}
+                  src="/profile-picture-3.jpg"
+                  alt="user photo"
+                />
+              </button>
+              {/* Dropdown menu */}
+              <div
+                className={`z-50 ${
+                  isMenuOpen ? "" : "hidden"
+                } fixed top-8 right-6 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow`}
+                id="user-dropdown">
+                <div className="px-4 py-3">
+                  <span className="block text-md text-gray-900">
+                    {session.user?.name}
+                  </span>
+                  <span className="block text-sm text-gray-500 truncate">
+                    {session.user?.email}
+                  </span>
+                </div>
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <Link
+                      href="#"
+                      className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <HiUser size={18} />
+                      &nbsp; Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => signOut()}
+                      className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <HiLogout size={18} />
+                      &nbsp; Sign out
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Sign out
-                  </a>
-                </li>
-              </ul>
             </div>
-          </div>
+          )}
         </div>
       </nav>
     </>
