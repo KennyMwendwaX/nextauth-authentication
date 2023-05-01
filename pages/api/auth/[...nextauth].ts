@@ -34,8 +34,7 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
           user.password
         );
-        if (!checkPassword)
-          throw new Error("Username or password doesn't match");
+        if (!checkPassword) throw new Error("Email or password doesn't match");
 
         return {
           ...user,

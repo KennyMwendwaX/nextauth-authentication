@@ -16,7 +16,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navbar session={session} />
         {!session && (
           <div className="mt-4">
             <div>You are not signed in</div>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { HiUser, HiLogout } from "react-icons/hi";
+import { FaUserCog } from "react-icons/fa";
+import { HiOutlineLogout } from "react-icons/hi";
 import type { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 
@@ -52,19 +53,19 @@ export default function Navbar({ session }: NavbarProps) {
                 } fixed top-8 right-6 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow`}
                 id="user-dropdown">
                 <div className="px-4 py-3">
-                  <span className="block text-md text-gray-900">
+                  <span className="block text-md font-semibold  text-gray-900">
                     {session.user?.name}
                   </span>
-                  <span className="block text-sm text-gray-500 truncate">
+                  <span className="block text-sm font-light text-gray-500 truncate">
                     {session.user?.email}
                   </span>
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
                   <li>
                     <Link
-                      href="#"
+                      href="/profile"
                       className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      <HiUser size={18} />
+                      <FaUserCog size={18} />
                       &nbsp; Profile
                     </Link>
                   </li>
@@ -72,7 +73,7 @@ export default function Navbar({ session }: NavbarProps) {
                     <button
                       onClick={() => signOut()}
                       className="inline-flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      <HiLogout size={18} />
+                      <HiOutlineLogout size={18} />
                       &nbsp; Sign out
                     </button>
                   </li>
