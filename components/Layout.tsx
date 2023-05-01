@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import Navbar from "./Navbar";
-import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
 type LayoutProps = {
   children: ReactNode;
-  session: Session | null;
 };
 
-export default function Layout({ children, session }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
+  const { data: session, status } = useSession();
   return (
     <>
       <Navbar session={session} />

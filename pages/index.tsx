@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Navbar from "@/components/Navbar";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 

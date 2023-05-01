@@ -36,7 +36,7 @@ export default function App({
     <main className={roboto.className}>
       <div className="bg-gray-100 min-h-screen">
         <SessionProvider session={session}>
-          <Layout session={session}>
+          <Layout>
             <Component {...pageProps} />
           </Layout>
         </SessionProvider>
