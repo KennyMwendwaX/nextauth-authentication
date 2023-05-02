@@ -17,7 +17,7 @@ export default function Profile() {
 
   return (
     <>
-      <div>profile</div>
+      <div>Not authenticated</div>
     </>
   );
 }
