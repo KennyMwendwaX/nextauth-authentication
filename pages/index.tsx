@@ -4,7 +4,6 @@ import Link from "next/link";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const loading = status === "loading";
 
   return (
     <>
@@ -15,24 +14,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {!session && (
+        {status === "authenticated" ? (
           <div className="mt-4">
-            <div>You are not signed in</div>
-            <Link
-              href="/signin"
-              className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-              Sign In
-            </Link>
-          </div>
-        )}
-        {session?.user && (
-          <div className="mt-4">
-            Welcome {session.user.name}, {session.user.email}
+            Welcome {session?.user?.name}, {session?.user?.email}
             <button
               onClick={() => signOut()}
               className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
               Sign Out
             </button>
+          </div>
+        ) : (
+          <div className="mt-4">
+            <div>
+              You are not signed in{" "}
+              <Link
+                href="/signin"
+                className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Sign In
+              </Link>
+            </div>
           </div>
         )}
       </div>

@@ -6,18 +6,15 @@ export default function Profile() {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      // The user is not authenticated, handle it here.
+      // The user is not authenticated, redirect to the signin route.
       router.replace("/signin");
     },
   });
 
-  if (status === "authenticated") {
-    return <p>Signed in as {session?.user?.email}</p>;
-  }
-
-  return (
-    <>
-      <div>Not authenticated</div>
-    </>
-  );
+  if (status === "authenticated")
+    return (
+      <>
+        <div>Signed in as {session?.user?.email}</div>;
+      </>
+    );
 }
