@@ -66,10 +66,10 @@ export default function Profile() {
             </div>
           </div>
           <div className="flex space-x-6 mt-6">
-            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 w-full py-2 inline-flex items-center justify-center">
+            <button className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
               <HiOutlineUser /> &nbsp; Change Username
             </button>
-            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 w-full py-2 inline-flex items-center justify-center">
+            <button className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
               <HiFingerPrint /> &nbsp; Change Password
             </button>
           </div>
