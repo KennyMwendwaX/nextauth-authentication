@@ -21,7 +21,7 @@ export default function Navbar({ session }: NavbarProps) {
       <nav className="bg-gray-900 px-2 sm:px-4 py-3 w-full z-20 top-0 left-0">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <Link href="/" className="flex items-center">
-            <span className="self-center text-gray-200 text-xl tracking-tight font-mono font-semibold whitespace-nowrap ">
+            <span className="self-center text-gray-200 text-xl tracking-tight font-mono font-semibold whitespace-nowrap">
               Iconic
             </span>
           </Link>

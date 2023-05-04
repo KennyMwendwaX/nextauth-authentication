@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Img from "@/public/image.jpg";
+import { HiOutlineUser, HiFingerPrint } from "react-icons/hi";
 
 export default function Profile() {
   const router = useRouter();
@@ -16,7 +17,9 @@ export default function Profile() {
   if (status === "authenticated")
     return (
       <div className="mt-5 max-w-md mx-auto">
-        <div className="text-2xl font-semibold text-gray-900">Profile</div>
+        <div className="text-2xl font-semibold text-gray-900 tracking-wide">
+          User Profile
+        </div>
         <div className="flex items-center space-x-4 mt-4">
           <Image
             width={80}
@@ -29,7 +32,7 @@ export default function Profile() {
             <div className="text-sm font-medium mb-1">Upload Profile Image</div>
             <input
               type="file"
-              className="pr-20 text-sm text-grey-500 border-2 border-gray-900 rounded-lg bg-gray-100 cursor-pointer file:mr-5 file:py-2 file:px-6
+              className="pr-20 w-full text-sm text-grey-500 border-2 border-gray-900 rounded-lg bg-gray-100 cursor-pointer file:mr-5 file:py-2 file:px-6
              file:border-0 file:text-sm file:font-medium file:bg-gray-900 file:text-white hover:file:cursor-pointer"
             />
             <p className="mt-1 text-xs text-gray-500">
@@ -37,7 +40,7 @@ export default function Profile() {
             </p>
           </div>
         </div>
-        <div className="mt-4 space-y-3">
+        <div className="mt-4">
           <div>
             <label
               htmlFor="username"
@@ -50,7 +53,7 @@ export default function Profile() {
               {session.user?.name}
             </div>
           </div>
-          <div>
+          <div className="mt-4">
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900">
@@ -62,9 +65,13 @@ export default function Profile() {
               {session.user?.email}
             </div>
           </div>
-          <div className="flex">
-            <button>Change Username</button>
-            <button>Change Password</button>
+          <div className="flex space-x-6 mt-6">
+            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 w-full py-2 inline-flex items-center justify-center">
+              <HiOutlineUser /> &nbsp; Change Username
+            </button>
+            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 w-full py-2 inline-flex items-center justify-center">
+              <HiFingerPrint /> &nbsp; Change Password
+            </button>
           </div>
         </div>
       </div>
