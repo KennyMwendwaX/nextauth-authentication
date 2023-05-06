@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Img from "@/public/image.jpg";
 import { HiOutlineUser, HiFingerPrint } from "react-icons/hi";
+import Link from "next/link";
 
 export default function Profile() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function Profile() {
 
   if (status === "authenticated")
     return (
-      <div className="mt-5 max-w-md mx-auto">
+      <div className="mt-8 max-w-md mx-auto">
         <div className="text-2xl font-semibold text-gray-900 tracking-wide">
           User Profile
         </div>
@@ -69,9 +70,11 @@ export default function Profile() {
             <button className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
               <HiOutlineUser /> &nbsp; Change Username
             </button>
-            <button className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
-              <HiFingerPrint /> &nbsp; Change Password
-            </button>
+            <Link
+              href="/profile/reset-password"
+              className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
+              <HiFingerPrint /> &nbsp; Reset Password
+            </Link>
           </div>
         </div>
       </div>

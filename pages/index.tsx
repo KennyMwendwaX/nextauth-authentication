@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       <div>
         {status === "authenticated" ? (
-          <div className="mt-4">
+          <div className="pt-16">
             Welcome {session?.user?.name}, {session?.user?.email}
             <button
               onClick={() => signOut()}
@@ -24,7 +24,7 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div className="mt-4">
+          <div className="pt-16">
             <div>
               You are not signed in{" "}
               <Link
