@@ -4,6 +4,13 @@ import Img from "@/public/image.jpg";
 import { HiFingerPrint } from "react-icons/hi";
 import { useState } from "react";
 import { useFormik } from "formik";
+import { forgotPasswordValidate } from "@/utils/validate";
+
+type FormValues = {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+};
 
 export default function ResetPassword() {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -16,10 +23,11 @@ export default function ResetPassword() {
       new_password: "",
       confirm_password: "",
     },
+    validate: forgotPasswordValidate,
     onSubmit,
   });
 
-  async function onSubmit() {}
+  async function onSubmit(values: FormValues) {}
 
   return (
     <>
@@ -58,7 +66,7 @@ export default function ResetPassword() {
                   className={`${
                     formik.errors.old_password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("old_password")}
@@ -89,7 +97,7 @@ export default function ResetPassword() {
                   className={`${
                     formik.errors.new_password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("new_password")}
@@ -120,7 +128,7 @@ export default function ResetPassword() {
                   className={`${
                     formik.errors.confirm_password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("confirm_password")}
@@ -164,7 +172,7 @@ export default function ResetPassword() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Reset password
               </button>
             </form>

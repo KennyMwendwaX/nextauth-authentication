@@ -9,7 +9,7 @@ import { signinFormValidate } from "@/utils/validate";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-type formValues = {
+type FormValues = {
   email: string;
   password: string;
 };
@@ -35,7 +35,7 @@ export default function Signin() {
     return null;
   }
 
-  async function onSubmit(values: formValues) {
+  async function onSubmit(values: FormValues) {
     try {
       const result = await signIn("credentials", {
         email: values.email,
