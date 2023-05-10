@@ -5,7 +5,6 @@ type FormErrors = {
   confirm_password?: string;
   old_password?: string;
   new_password?: string;
-  old_username?: string;
   new_username?: string;
 };
 
@@ -89,35 +88,19 @@ const forgotPasswordSchema = z
     path: ["confirm_password"],
   });
 
-const changeUsernameSchema = z
-  .object({
-    old_username: z
-      .string({
-        required_error: "Old username is required",
-        invalid_type_error: "Old username must be a string",
-      })
-      .min(5, {
-        message: "Old username must be greater than 5 characters long",
-      })
-      .max(20, {
-        message: "Old username must be less than 20 characters long",
-      }),
-    new_username: z
-      .string({
-        required_error: "New username is required",
-        invalid_type_error: "New username must be a string",
-      })
-      .min(5, {
-        message: "New username must be greater than 5 characters long",
-      })
-      .max(20, {
-        message: "New username must be less than 20 characters long",
-      }),
-  })
-  .refine((data) => data.new_username === data.old_username, {
-    message: "New username should not be different",
-    path: ["new_username"],
-  });
+const changeUsernameSchema = z.object({
+  new_username: z
+    .string({
+      required_error: "New username is required",
+      invalid_type_error: "New username must be a string",
+    })
+    .min(5, {
+      message: "New username must be greater than 5 characters long",
+    })
+    .max(20, {
+      message: "New username must be less than 20 characters long",
+    }),
+});
 
 export function signupFormValidate(values: {
   username: string;
@@ -182,10 +165,7 @@ export function forgotPasswordValidate(values: {
   }
 }
 
-export function changeUsernameValidate(values: {
-  old_username: string;
-  new_username: string;
-}) {
+export function changeUsernameValidate(values: { new_username: string }) {
   // Validate the form values against the schema
   const result = changeUsernameSchema.safeParse(values);
 
@@ -193,7 +173,6 @@ export function changeUsernameValidate(values: {
     const formErrors = result.error.format();
 
     const errors: FormErrors = {
-      old_username: formErrors.old_username?._errors[0],
       new_username: formErrors.new_username?._errors[0],
     };
 

@@ -17,7 +17,7 @@ export default function Profile() {
 
   if (status === "authenticated")
     return (
-      <div className="mt-8 max-w-md mx-auto">
+      <div className="pt-16 max-w-md mx-auto">
         <div className="text-2xl font-semibold text-gray-900 tracking-wide">
           User Profile
         </div>
