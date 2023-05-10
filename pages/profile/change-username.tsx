@@ -48,6 +48,10 @@ export default function ChangeUsername() {
       "http://localhost:3000/api/profile/change-username",
       options
     );
+
+    if (response.ok) {
+      router.reload();
+    }
   }
 
   return (
@@ -74,6 +78,20 @@ export default function ChangeUsername() {
             <form
               className="space-y-3 md:space-y-4"
               onSubmit={formik.handleSubmit}>
+              <div className="relative">
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="block mb-2 text-sm font-medium text-gray-900">
+                    Current Username
+                  </label>
+                  <div
+                    id="username"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
+                    {session?.user?.name}
+                  </div>
+                </div>
+              </div>
               <div className="relative">
                 <label
                   htmlFor="new_username"
