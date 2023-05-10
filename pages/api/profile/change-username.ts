@@ -15,5 +15,5 @@ export default async function handler(
 
   if (!req.body) return res.status(400).json({ message: "Missing form data" });
 
-  const { new_username } = req.body;
+  const { email, new_username } = req.body;
 }

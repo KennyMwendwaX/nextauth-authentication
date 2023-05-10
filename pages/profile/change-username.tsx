@@ -4,12 +4,23 @@ import Image from "next/image";
 import Img from "@/public/image.jpg";
 import { HiUser } from "react-icons/hi";
 import { changeUsernameValidate } from "@/utils/validate";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 type FormValues = {
   new_username: string;
 };
 
 export default function ChangeUsername() {
+  const router = useRouter();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, redirect to the signin route.
+      router.replace("/signin");
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       new_username: "",
@@ -18,7 +29,26 @@ export default function ChangeUsername() {
     onSubmit,
   });
 
-  async function onSubmit(values: FormValues) {}
+  async function onSubmit(values: FormValues) {
+    const { new_username } = values;
+    const email = session?.user?.email;
+
+    const payload = {
+      email,
+      new_username,
+    };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    };
+
+    const response = await fetch(
+      "http://localhost:3000/api/profile/change-username",
+      options
+    );
+  }
 
   return (
     <>

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Profile() {
   const router = useRouter();
-  const { data: session, status } = useSession({
+  const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, redirect to the signin route.
@@ -15,70 +15,69 @@ export default function Profile() {
     },
   });
 
-  if (status === "authenticated")
-    return (
-      <div className="pt-16 max-w-md mx-auto">
-        <div className="text-2xl font-semibold text-gray-900 tracking-wide">
-          User Profile
-        </div>
-        <div className="flex items-center space-x-4 mt-4">
-          <Image
-            width={80}
-            height={80}
-            src={Img}
-            className="rounded-full"
-            alt="Picture Profile"
-          />
-          <div>
-            <div className="text-sm font-medium mb-1">Upload Profile Image</div>
-            <input
-              type="file"
-              className="pr-20 w-full text-sm text-grey-500 border-2 border-gray-900 rounded-lg bg-gray-100 cursor-pointer file:mr-5 file:py-2 file:px-6
+  return (
+    <div className="pt-16 max-w-md mx-auto">
+      <div className="text-2xl font-semibold text-gray-900 tracking-wide">
+        User Profile
+      </div>
+      <div className="flex items-center space-x-4 mt-4">
+        <Image
+          width={80}
+          height={80}
+          src={Img}
+          className="rounded-full"
+          alt="Picture Profile"
+        />
+        <div>
+          <div className="text-sm font-medium mb-1">Upload Profile Image</div>
+          <input
+            type="file"
+            className="pr-20 w-full text-sm text-grey-500 border-2 border-gray-900 rounded-lg bg-gray-100 cursor-pointer file:mr-5 file:py-2 file:px-6
              file:border-0 file:text-sm file:font-medium file:bg-gray-900 file:text-white hover:file:cursor-pointer"
-            />
-            <p className="mt-1 text-xs text-gray-500">
-              SVG, PNG, JPG or JPEG (MAX. 800x800px).
-            </p>
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            SVG, PNG, JPG or JPEG (MAX. 800x800px).
+          </p>
+        </div>
+      </div>
+      <div className="mt-4">
+        <div>
+          <label
+            htmlFor="username"
+            className="block mb-2 text-sm font-medium text-gray-900">
+            Username
+          </label>
+          <div
+            id="username"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
+            {session?.user?.name}
           </div>
         </div>
         <div className="mt-4">
-          <div>
-            <label
-              htmlFor="username"
-              className="block mb-2 text-sm font-medium text-gray-900">
-              Username
-            </label>
-            <div
-              id="username"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
-              {session.user?.name}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900">
-              Email
-            </label>
-            <div
-              id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
-              {session.user?.email}
-            </div>
-          </div>
-          <div className="flex space-x-6 mt-6">
-            <Link
-              href="/profile/change-username"
-              className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
-              <HiOutlineUser /> &nbsp; Change Username
-            </Link>
-            <Link
-              href="/profile/reset-password"
-              className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
-              <HiFingerPrint /> &nbsp; Reset Password
-            </Link>
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900">
+            Email
+          </label>
+          <div
+            id="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
+            {session?.user?.email}
           </div>
         </div>
+        <div className="flex space-x-6 mt-6">
+          <Link
+            href="/profile/change-username"
+            className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
+            <HiOutlineUser /> &nbsp; Change Username
+          </Link>
+          <Link
+            href="/profile/reset-password"
+            className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
+            <HiFingerPrint /> &nbsp; Reset Password
+          </Link>
+        </div>
       </div>
-    );
+    </div>
+  );
 }
