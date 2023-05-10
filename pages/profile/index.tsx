@@ -27,7 +27,7 @@ export default function Profile() {
             height={80}
             src={Img}
             className="rounded-full"
-            alt="Cammy Lin Ux Designer - Circle Picture Profile Girl Png@nicepng.com"
+            alt="Picture Profile"
           />
           <div>
             <div className="text-sm font-medium mb-1">Upload Profile Image</div>
@@ -50,7 +50,7 @@ export default function Profile() {
             </label>
             <div
               id="username"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-blue-600 focus:outline-none block w-full p-2.5">
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
               {session.user?.name}
             </div>
           </div>
@@ -62,14 +62,16 @@ export default function Profile() {
             </label>
             <div
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-blue-600 focus:outline-none block w-full p-2.5">
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-gray-900 focus:outline-none block w-full p-2.5">
               {session.user?.email}
             </div>
           </div>
           <div className="flex space-x-6 mt-6">
-            <button className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
+            <Link
+              href="/profile/change-username"
+              className="bg-transparent hover:bg-gray-900 text-gray-900 hover:text-white rounded-lg border border-gray-900 focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">
               <HiOutlineUser /> &nbsp; Change Username
-            </button>
+            </Link>
             <Link
               href="/profile/reset-password"
               className="bg-gray-800 hover:bg-gray-900 text-white rounded-lg focus:ring-4 focus:ring-gray-400 w-full py-2 inline-flex items-center justify-center">

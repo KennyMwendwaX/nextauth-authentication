@@ -9,7 +9,7 @@ import { signupFormValidate } from "@/utils/validate";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-type formValues = {
+type FormValues = {
   email: string;
   password: string;
   confirm_password: string;
@@ -39,7 +39,7 @@ export default function Signup() {
     return null;
   }
 
-  async function onSubmit(values: formValues) {
+  async function onSubmit(values: FormValues) {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,7 +96,7 @@ export default function Signup() {
                   className={`${
                     formik.errors.username
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="John Doe"
                   required
@@ -123,7 +123,7 @@ export default function Signup() {
                   className={`${
                     formik.errors.email
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="johndoe@gmail.com"
                   required
@@ -154,7 +154,7 @@ export default function Signup() {
                   className={`${
                     formik.errors.password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("password")}
@@ -185,7 +185,7 @@ export default function Signup() {
                   className={`${
                     formik.errors.confirm_password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
                   {...formik.getFieldProps("confirm_password")}
@@ -205,7 +205,7 @@ export default function Signup() {
               )}
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Sign Up
               </button>
               <p className="text-sm font-light text-gray-500">

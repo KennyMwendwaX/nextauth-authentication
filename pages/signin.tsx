@@ -101,7 +101,7 @@ export default function Signin() {
                   className={`${
                     formik.errors.email
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   placeholder="johndoe@gmail.com"
                   required
@@ -129,7 +129,7 @@ export default function Signin() {
                   className={`${
                     formik.errors.password
                       ? `focus:border-red-600`
-                      : `focus:border-blue-600`
+                      : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   required
                   {...formik.getFieldProps("password")}
@@ -174,7 +174,7 @@ export default function Signin() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Sign In
               </button>
             </form>
