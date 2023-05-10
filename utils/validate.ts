@@ -9,7 +9,7 @@ type FormErrors = {
 
 import { z } from "zod";
 
-const signupformSchema = z
+const signupFormSchema = z
   .object({
     username: z
       .string({
@@ -43,7 +43,7 @@ const signupformSchema = z
     path: ["confirm_password"],
   });
 
-const signinformSchema = z.object({
+const signinFormSchema = z.object({
   email: z
     .string({
       required_error: "Email is required",
@@ -94,7 +94,7 @@ export function signupFormValidate(values: {
   confirm_password: string;
 }) {
   // Validate the form values against the schema
-  const result = signupformSchema.safeParse(values);
+  const result = signupFormSchema.safeParse(values);
 
   if (!result.success) {
     const formErrors = result.error.format();
@@ -115,7 +115,7 @@ export function signinFormValidate(values: {
   password: string;
 }) {
   // Validate the form values against the schema
-  const result = signinformSchema.safeParse(values);
+  const result = signinFormSchema.safeParse(values);
 
   if (!result.success) {
     const formErrors = result.error.format();
