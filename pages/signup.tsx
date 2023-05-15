@@ -4,12 +4,14 @@ import Link from "next/link";
 import Img from "@/public/image.jpg";
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint, HiUser } from "react-icons/hi";
-import { useFormik } from "formik";
-import { signupFormValidate } from "@/utils/validate";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupFormSchema } from "@/utils/validate";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 type FormValues = {
+  username: string;
   email: string;
   password: string;
   confirm_password: string;
@@ -18,17 +20,14 @@ type FormValues = {
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [serverErrors, setServerErrors] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-    },
-    validate: signupFormValidate,
-    onSubmit,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(signupFormSchema),
   });
 
   const { data: session } = useSession();
@@ -52,7 +51,7 @@ export default function Signup() {
     );
 
     if (register.status === 409) {
-      setErrors(["Email is already registered"]);
+      setServerErrors("Email is already registered");
     }
 
     if (register.status === 201) {
@@ -81,9 +80,16 @@ export default function Signup() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign up to have an account
             </h1>
+            {serverErrors && (
+              <div
+                className="p-4 mb-4 text-sm border border-red-600 text-red-800 rounded-lg bg-red-50"
+                role="alert">
+                {serverErrors[0]}
+              </div>
+            )}
             <form
               className="space-y-3 md:space-y-4"
-              onSubmit={formik.handleSubmit}>
+              onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <label
                   htmlFor="username"
@@ -94,21 +100,21 @@ export default function Signup() {
                   type="text"
                   id="username"
                   className={`${
-                    formik.errors.username
+                    errors.username?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="John Doe"
                   required
-                  {...formik.getFieldProps("username")}
+                  {...register("username")}
                 />
                 <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiUser size={20} />
                 </span>
               </div>
-              {formik.errors.username && (
+              {errors.username?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.username}
+                  {errors.username?.message}
                 </span>
               )}
               <div className="relative">
@@ -121,25 +127,22 @@ export default function Signup() {
                   type="email"
                   id="email"
                   className={`${
-                    formik.errors.email
+                    errors.email?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="johndoe@gmail.com"
                   required
-                  {...formik.getFieldProps("email")}
+                  {...register("email")}
                 />
                 <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
-              {formik.errors.email && (
+              {errors.email?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.email} {errors[0]}
+                  {errors.email?.message}
                 </span>
-              )}
-              {errors.length > 0 && (
-                <span className="text-red-600 text-xs">{errors[0]}</span>
               )}
               <div className="relative">
                 <label
@@ -152,12 +155,12 @@ export default function Signup() {
                   id="password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.password
+                    errors.password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
-                  {...formik.getFieldProps("password")}
+                  {...register("password")}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
@@ -167,9 +170,9 @@ export default function Signup() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.password && (
+              {errors.password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.password}
+                  {errors.password?.message}
                 </span>
               )}
               <div className="relative">
@@ -183,12 +186,12 @@ export default function Signup() {
                   id="confirm_password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.confirm_password
+                    errors.confirm_password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
-                  {...formik.getFieldProps("confirm_password")}
+                  {...register("confirm_password")}
                 />
                 <span
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -198,9 +201,9 @@ export default function Signup() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.confirm_password && (
+              {errors.confirm_password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.confirm_password}
+                  {errors.confirm_password?.message}
                 </span>
               )}
               <button

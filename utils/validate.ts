@@ -10,7 +10,7 @@ type FormErrors = {
 
 import { z } from "zod";
 
-const signupFormSchema = z
+export const signupFormSchema = z
   .object({
     username: z
       .string({
@@ -44,7 +44,7 @@ const signupFormSchema = z
     path: ["confirm_password"],
   });
 
-const signinFormSchema = z.object({
+export const signinFormSchema = z.object({
   email: z
     .string({
       required_error: "Email is required",
@@ -101,48 +101,6 @@ const changeUsernameSchema = z.object({
       message: "New username must be less than 20 characters long",
     }),
 });
-
-export function signupFormValidate(values: {
-  username: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}) {
-  // Validate the form values against the schema
-  const result = signupFormSchema.safeParse(values);
-
-  if (!result.success) {
-    const formErrors = result.error.format();
-
-    const errors: FormErrors = {
-      username: formErrors.username?._errors[0],
-      email: formErrors.email?._errors[0],
-      password: formErrors.password?._errors[0],
-      confirm_password: formErrors.confirm_password?._errors[0],
-    };
-
-    return errors;
-  }
-}
-
-export function signinFormValidate(values: {
-  email: string;
-  password: string;
-}) {
-  // Validate the form values against the schema
-  const result = signinFormSchema.safeParse(values);
-
-  if (!result.success) {
-    const formErrors = result.error.format();
-
-    const errors: FormErrors = {
-      email: formErrors.email?._errors[0],
-      password: formErrors.password?._errors[0],
-    };
-
-    return errors;
-  }
-}
 
 export function forgotPasswordValidate(values: {
   old_password: string;

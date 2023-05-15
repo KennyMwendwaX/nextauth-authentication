@@ -4,8 +4,9 @@ import Link from "next/link";
 import Img from "@/public/image.jpg";
 import { useState } from "react";
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
-import { useFormik } from "formik";
-import { signinFormValidate } from "@/utils/validate";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signinFormSchema } from "@/utils/validate";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
@@ -16,15 +17,14 @@ type FormValues = {
 
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [serverErrors, setServerErrors] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate: signinFormValidate,
-    onSubmit,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(signinFormSchema),
   });
 
   const { data: session } = useSession();
@@ -45,14 +45,14 @@ export default function Signin() {
 
       if (result?.error) {
         // If there was an error, display the error message to the user
-        setErrorMessage(result.error);
+        setServerErrors(result.error);
       } else {
         // If there was no error, redirect the user to the home page
         router.push("/");
       }
     } catch (error) {
       // If there was an unexpected error, display a generic error message to the user
-      setErrorMessage("An unexpected error occurred. Please try again later.");
+      setServerErrors("An unexpected error occurred. Please try again later.");
     }
   }
 
@@ -78,17 +78,17 @@ export default function Signin() {
               Sign in to your account
             </h1>
 
-            {errorMessage && (
+            {serverErrors && (
               <div
                 className="p-4 mb-4 text-sm border border-red-600 text-red-800 rounded-lg bg-red-50"
                 role="alert">
-                {errorMessage}
+                {serverErrors}
               </div>
             )}
 
             <form
               className="space-y-4 md:space-y-1"
-              onSubmit={formik.handleSubmit}>
+              onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <label
                   htmlFor="email"
@@ -99,21 +99,21 @@ export default function Signin() {
                   type="email"
                   id="email"
                   className={`${
-                    formik.errors.email
+                    errors.email?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   placeholder="johndoe@gmail.com"
                   required
-                  {...formik.getFieldProps("email")}
+                  {...register("email")}
                 />
                 <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
-              {formik.errors.email && (
+              {errors.email?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.email}
+                  {errors.email?.message}
                 </span>
               )}
               <div className="relative">
@@ -127,12 +127,12 @@ export default function Signin() {
                   id="password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.password
+                    errors.password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
                   required
-                  {...formik.getFieldProps("password")}
+                  {...register("password")}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
@@ -142,9 +142,9 @@ export default function Signin() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.password && (
+              {errors.password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.password}
+                  {errors.password?.message}
                 </span>
               )}
               <div className="flex items-center justify-between">
