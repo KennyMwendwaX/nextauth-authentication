@@ -3,8 +3,9 @@ import Image from "next/image";
 import Img from "@/public/image.jpg";
 import { HiFingerPrint } from "react-icons/hi";
 import { useState } from "react";
-import { useFormik } from "formik";
-import { forgotPasswordValidate } from "@/utils/validate";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { forgotPasswordSchema } from "@/utils/validate";
 
 type FormValues = {
   old_password: string;
@@ -17,14 +18,12 @@ export default function ResetPassword() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const formik = useFormik({
-    initialValues: {
-      old_password: "",
-      new_password: "",
-      confirm_password: "",
-    },
-    validate: forgotPasswordValidate,
-    onSubmit,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(forgotPasswordSchema),
   });
 
   async function onSubmit(values: FormValues) {}
@@ -52,7 +51,7 @@ export default function ResetPassword() {
             </h1>
             <form
               className="space-y-3 md:space-y-4"
-              onSubmit={formik.handleSubmit}>
+              onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <label
                   htmlFor="old password"
@@ -64,12 +63,12 @@ export default function ResetPassword() {
                   id="old_password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.old_password
+                    errors.old_password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
-                  {...formik.getFieldProps("old_password")}
+                  {...register("old_password")}
                 />
                 <span
                   onClick={() => setShowOldPassword(!showOldPassword)}
@@ -79,9 +78,9 @@ export default function ResetPassword() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.old_password && (
+              {errors.old_password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.old_password}
+                  {errors.old_password?.message}
                 </span>
               )}
               <div className="relative">
@@ -95,12 +94,12 @@ export default function ResetPassword() {
                   id="new_password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.new_password
+                    errors.new_password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
-                  {...formik.getFieldProps("new_password")}
+                  {...register("new_password")}
                 />
                 <span
                   onClick={() => setShowNewPassword(!showNewPassword)}
@@ -110,9 +109,9 @@ export default function ResetPassword() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.new_password && (
+              {errors.new_password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.new_password}
+                  {errors.new_password?.message}
                 </span>
               )}
               <div className="relative">
@@ -126,12 +125,12 @@ export default function ResetPassword() {
                   id="confirm_password"
                   placeholder="••••••••"
                   className={`${
-                    formik.errors.confirm_password
+                    errors.confirm_password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   required
-                  {...formik.getFieldProps("confirm_password")}
+                  {...register("confirm_password")}
                 />
                 <span
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -141,9 +140,9 @@ export default function ResetPassword() {
                   <HiFingerPrint size={20} />
                 </span>
               </div>
-              {formik.errors.confirm_password && (
+              {errors.confirm_password?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.confirm_password}
+                  {errors.confirm_password?.message}
                 </span>
               )}
 

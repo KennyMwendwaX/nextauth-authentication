@@ -1,13 +1,3 @@
-type FormErrors = {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirm_password?: string;
-  old_password?: string;
-  new_password?: string;
-  new_username?: string;
-};
-
 import { z } from "zod";
 
 export const signupFormSchema = z
@@ -61,7 +51,7 @@ export const signinFormSchema = z.object({
     .max(20, { message: "Password must be less than 20 characters long" }),
 });
 
-const forgotPasswordSchema = z
+export const forgotPasswordSchema = z
   .object({
     old_password: z
       .string({
@@ -88,7 +78,7 @@ const forgotPasswordSchema = z
     path: ["confirm_password"],
   });
 
-const changeUsernameSchema = z.object({
+export const changeUsernameSchema = z.object({
   new_username: z
     .string({
       required_error: "New username is required",
@@ -101,39 +91,3 @@ const changeUsernameSchema = z.object({
       message: "New username must be less than 20 characters long",
     }),
 });
-
-export function forgotPasswordValidate(values: {
-  old_password: string;
-  new_password: string;
-  confirm_password: string;
-}) {
-  // Validate the form values against the schema
-  const result = forgotPasswordSchema.safeParse(values);
-
-  if (!result.success) {
-    const formErrors = result.error.format();
-
-    const errors: FormErrors = {
-      old_password: formErrors.old_password?._errors[0],
-      new_password: formErrors.new_password?._errors[0],
-      confirm_password: formErrors.confirm_password?._errors[0],
-    };
-
-    return errors;
-  }
-}
-
-export function changeUsernameValidate(values: { new_username: string }) {
-  // Validate the form values against the schema
-  const result = changeUsernameSchema.safeParse(values);
-
-  if (!result.success) {
-    const formErrors = result.error.format();
-
-    const errors: FormErrors = {
-      new_username: formErrors.new_username?._errors[0],
-    };
-
-    return errors;
-  }
-}

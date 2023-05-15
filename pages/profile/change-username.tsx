@@ -1,13 +1,12 @@
-import { useFormik } from "formik";
 import Head from "next/head";
 import Image from "next/image";
 import Img from "@/public/image.jpg";
 import { HiUser } from "react-icons/hi";
-import { changeUsernameValidate } from "@/utils/validate";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { changeUsernameSchema } from "@/utils/validate";
 import { useRouter } from "next/router";
-import { getSession, useSession } from "next-auth/react";
-import { useState } from "react";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
 type FormValues = {
   new_username: string;
@@ -23,12 +22,12 @@ export default function ChangeUsername() {
     },
   });
 
-  const formik = useFormik({
-    initialValues: {
-      new_username: "",
-    },
-    validate: changeUsernameValidate,
-    onSubmit,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(changeUsernameSchema),
   });
 
   async function onSubmit(values: FormValues) {
@@ -80,7 +79,7 @@ export default function ChangeUsername() {
             </h1>
             <form
               className="space-y-3 md:space-y-4"
-              onSubmit={formik.handleSubmit}>
+              onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <div>
                   <label
@@ -105,21 +104,21 @@ export default function ChangeUsername() {
                   type="text"
                   id="new_username"
                   className={`${
-                    formik.errors.new_username
+                    errors.new_username?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="John Damian"
                   required
-                  {...formik.getFieldProps("new_username")}
+                  {...register("new_username")}
                 />
                 <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiUser size={20} />
                 </span>
               </div>
-              {formik.errors.new_username && (
+              {errors.new_username?.message && (
                 <span className="text-red-600 text-xs">
-                  {formik.errors.new_username}
+                  {errors.new_username?.message}
                 </span>
               )}
 
