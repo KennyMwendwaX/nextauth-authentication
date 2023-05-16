@@ -38,7 +38,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           ...user,
-          name: user.username,
+          name: user.name,
         };
       },
     }),

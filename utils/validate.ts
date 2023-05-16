@@ -2,13 +2,13 @@ import { z } from "zod";
 
 export const signupFormSchema = z
   .object({
-    username: z
+    name: z
       .string({
-        required_error: "Username is required",
-        invalid_type_error: "Username must be a string",
+        required_error: "Name is required",
+        invalid_type_error: "Name must be a string",
       })
-      .min(5, { message: "Username must be greater than 5 characters long" })
-      .max(20, { message: "Username must be less than 20 characters long" }),
+      .min(5, { message: "Name must be greater than 5 characters long" })
+      .max(20, { message: "Name must be less than 20 characters long" }),
     email: z
       .string({
         required_error: "Email is required",

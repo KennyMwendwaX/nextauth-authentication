@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 type FormValues = {
-  username: string;
+  name: string;
   email: string;
   password: string;
   confirm_password: string;
@@ -92,29 +92,29 @@ export default function Signup() {
               onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <label
-                  htmlFor="username"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900">
-                  Username
+                  Name
                 </label>
                 <input
                   type="text"
-                  id="username"
+                  id="name"
                   className={`${
-                    errors.username?.message
+                    errors.name?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
                   } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
                   placeholder="John Doe"
                   required
-                  {...register("username")}
+                  {...register("name")}
                 />
                 <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
                   <HiUser size={20} />
                 </span>
               </div>
-              {errors.username?.message && (
+              {errors.name?.message && (
                 <span className="text-red-600 text-xs">
-                  {errors.username?.message}
+                  {errors.name?.message}
                 </span>
               )}
               <div className="relative">
