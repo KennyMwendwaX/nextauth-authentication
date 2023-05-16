@@ -19,7 +19,6 @@ enum ProviderEnum {
 model Account {
   id                String       @id @default(cuid())
   userId            String       @unique
-  type              String
   provider          ProviderEnum
   providerAccountId String?
   refresh_token     String?      @db.Text

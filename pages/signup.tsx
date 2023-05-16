@@ -54,6 +54,10 @@ export default function Signup() {
       setServerErrors("Email is already registered");
     }
 
+    if (register.status === 500) {
+      setServerErrors("Server error, try again later");
+    }
+
     if (register.status === 201) {
       router.replace("/signin");
     }
