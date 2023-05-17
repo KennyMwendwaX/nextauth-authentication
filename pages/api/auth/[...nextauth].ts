@@ -1,5 +1,6 @@
 import { prisma } from "@/utils/db";
 import { compare } from "bcrypt";
+import { sign } from "jsonwebtoken";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -36,9 +37,56 @@ export const authOptions: NextAuthOptions = {
         );
         if (!checkPassword) throw new Error("Email or password doesn't match");
 
+        // Generate access token
+        const accessToken = sign(
+          { userId: user.id },
+          `${process.env.ACCESS_TOKEN_SECRET}`,
+          {
+            expiresIn: "1h",
+          }
+        );
+
+        // Generate refresh token
+        const refreshToken = sign(
+          { userId: user.id },
+          `${process.env.REFRESH_TOKEN_SECRET}`,
+          {
+            expiresIn: "7d",
+          }
+        );
+
+        // Generate session state
+        const sessionState = sign(
+          { userId: user.id },
+          `${process.env.SESSION_STATE_SECRET}`
+        );
+
+        // Update Account model
+        const account = await prisma.account.update({
+          where: { userId: user.id },
+          data: {
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            session_state: sessionState,
+            token_type: "Bearer",
+          },
+        });
+
+        // Create Session model
+        const session = await prisma.session.create({
+          data: {
+            userId: user.id,
+            expires: new Date(), // Set the expiration date for the session
+          },
+        });
+
         return {
           ...user,
           name: user.name,
+          accessToken,
+          sessionState,
+          account,
+          session,
         };
       },
     }),
