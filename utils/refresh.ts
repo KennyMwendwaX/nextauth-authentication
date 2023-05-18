@@ -1,5 +1,10 @@
 import { prisma } from "@/utils/db";
-import { sign, verify } from "jsonwebtoken";
+import {
+  JsonWebTokenError,
+  TokenExpiredError,
+  sign,
+  verify,
+} from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // API route for refreshing the access token
@@ -7,10 +12,15 @@ export default async function refresh(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST")
+  if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
+  }
 
   const { refreshToken } = req.body;
+
+  if (!refreshToken || typeof refreshToken !== "string") {
+    return res.status(400).json({ error: "Invalid refresh token" });
+  }
 
   try {
     // Verify and decode the refresh token
@@ -26,7 +36,9 @@ export default async function refresh(
       },
     });
 
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     // Generate a new access token
     const accessToken = sign(
@@ -38,7 +50,15 @@ export default async function refresh(
     );
 
     return res.status(200).json({ accessToken });
-  } catch (error) {
-    return res.status(401).json({ error: "Invalid refresh token" });
+  } catch (error: any) {
+    if (error instanceof TokenExpiredError) {
+      return res.status(401).json({ error: "Refresh token expired" });
+    }
+
+    if (error instanceof JsonWebTokenError) {
+      return res.status(401).json({ error: "Invalid refresh token" });
+    }
+
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
