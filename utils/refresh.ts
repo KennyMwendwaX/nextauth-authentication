@@ -59,6 +59,6 @@ export default async function refresh(
       return res.status(401).json({ error: "Invalid refresh token" });
     }
 
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.redirect("/signin");
   }
 }

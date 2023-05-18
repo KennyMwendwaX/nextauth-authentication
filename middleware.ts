@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import refresh from "@/utils/refresh";
 
 export const config = {
-  matcher: "/api/refresh",
+  matcher: "/",
 };
 
 export default function middleware(req: NextApiRequest, res: NextApiResponse) {
