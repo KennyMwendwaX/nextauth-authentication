@@ -41,10 +41,8 @@ export const authOptions: NextAuthOptions = {
         if (!user) throw new Error("This email is not registered");
 
         // Check password
-        const checkPassword = await compare(
-          credentials.password,
-          user.password
-        );
+        const checkPassword =
+          user.password && (await compare(credentials.password, user.password));
         if (!checkPassword) throw new Error("Email or password doesn't match");
 
         // Refresh tokens

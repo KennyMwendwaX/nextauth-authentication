@@ -70,9 +70,8 @@ export default async function handler(
     const userExists = await prisma.user.findUnique({
       where: { email },
     });
-    if (userExists) {
+    if (userExists)
       return res.status(409).json({ message: "Email already registered" });
-    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
