@@ -56,6 +56,16 @@ export default function Signin() {
     }
   }
 
+  // Handle Google Signin
+  async function handleGoogleSignin() {
+    signIn("google", { callbackUrl: "http://localhost:3000/" });
+  }
+
+  // Handle Github Signin
+  async function handleGithubSignin() {
+    signIn("github", { callbackUrl: "http://localhost:3000/" });
+  }
+
   return (
     <>
       <Head>
@@ -179,11 +189,15 @@ export default function Signin() {
               </button>
             </form>
             <div>
-              <button className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2 mb-2">
+              <button
+                onClick={handleGoogleSignin}
+                className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2 mb-2">
                 <Image width={20} height={20} alt="google" src="/google.svg" />
                 &nbsp;Sign in with Google
               </button>
-              <button className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
+              <button
+                onClick={handleGithubSignin}
+                className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
                 <Image width={20} height={20} alt="github" src="/github.svg" />
                 &nbsp;Sign in with Github
               </button>

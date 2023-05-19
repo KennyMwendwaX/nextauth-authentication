@@ -3,6 +3,8 @@ import { compare } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 type MyCredentials = {
   email: string;
@@ -11,6 +13,14 @@ type MyCredentials = {
 
 export const authOptions: NextAuthOptions = {
   providers: [
+    GoogleProvider({
+      clientId: `${process.env.GOOGLE_CLIENT_ID}`,
+      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
+    }),
+    GitHubProvider({
+      clientId: `${process.env.GITHUB_CLIENT_ID}`,
+      clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
+    }),
     Credentials({
       name: "Credentials",
       credentials: {
@@ -79,44 +89,6 @@ export const authOptions: NextAuthOptions = {
 };
 
 export default NextAuth(authOptions);
-
-async function tokens(user: { id: string }) {
-  // Fetch the existing user tokens from the database
-  const existingTokens = await prisma.account.findUnique({
-    where: { userId: user.id },
-    select: { access_token: true, refresh_token: true },
-  });
-
-  // Generate access token
-  const accessToken = sign(
-    { userId: user.id },
-    `${process.env.ACCESS_TOKEN_SECRET}`,
-    {
-      expiresIn: "1h",
-    }
-  );
-
-  // Generate refresh token
-  const refreshToken = sign(
-    { userId: user.id },
-    `${process.env.REFRESH_TOKEN_SECRET}`,
-    {
-      expiresIn: "7d",
-    }
-  );
-
-  // Generate session state
-  const sessionState = sign(
-    { userId: user.id },
-    `${process.env.SESSION_STATE_SECRET}`
-  );
-
-  return {
-    access_token: accessToken,
-    refresh_token: refreshToken,
-    session_state: sessionState,
-  };
-}
 
 async function getTokens(user: { id: string }) {
   // Fetch the existing user tokens from the database
