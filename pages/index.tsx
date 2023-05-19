@@ -19,7 +19,7 @@ export default function Home() {
             Welcome {session?.user?.name}, {session?.user?.email}
             <button
               onClick={() => signOut()}
-              className="ml-2 text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              className="ml-2 rounded-lg bg-gray-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-400">
               Sign Out
             </button>
           </div>
@@ -29,7 +29,7 @@ export default function Home() {
               You are not signed in{" "}
               <Link
                 href="/signin"
-                className="ml-2 text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                className="ml-2 rounded-lg bg-gray-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-400">
                 Sign In
               </Link>
             </div>

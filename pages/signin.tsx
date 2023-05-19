@@ -75,22 +75,22 @@ export default function Signin() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <a
           href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-          <Image className="w-8 h-8 mr-2" src={Img} alt="logo" />
+          className="mb-6 flex items-center text-2xl font-semibold text-gray-900">
+          <Image className="mr-2 h-8 w-8" src={Img} alt="logo" />
           Iconic
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        <div className="w-full rounded-lg bg-white shadow dark:border sm:max-w-md md:mt-0 xl:p-0">
+          <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
               Sign in to your account
             </h1>
 
             {serverErrors && (
               <div
-                className="p-4 mb-4 text-sm border border-red-600 text-red-800 rounded-lg bg-red-50"
+                className="mb-4 rounded-lg border border-red-600 bg-red-50 p-4 text-sm text-red-800"
                 role="alert">
                 {serverErrors}
               </div>
@@ -102,7 +102,7 @@ export default function Signin() {
               <div className="relative">
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Email
                 </label>
                 <input
@@ -112,24 +112,24 @@ export default function Signin() {
                     errors.email?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   placeholder="johndoe@gmail.com"
                   required
                   {...register("email")}
                 />
-                <span className="absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
+                <span className="absolute bottom-3 right-0 flex cursor-pointer items-center pr-3 text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
               {errors.email?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.email?.message}
                 </span>
               )}
               <div className="relative">
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Password
                 </label>
                 <input
@@ -140,7 +140,7 @@ export default function Signin() {
                     errors.password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2.5`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   required
                   {...register("password")}
                 />
@@ -148,24 +148,24 @@ export default function Signin() {
                   onClick={() => setShowPassword(!showPassword)}
                   className={`${
                     !showPassword ? `text-gray-600` : `text-blue-600`
-                  } absolute bottom-3 right-0 pr-3 flex items-center cursor-pointer`}>
+                  } absolute bottom-3 right-0 flex cursor-pointer items-center pr-3`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
               {errors.password?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.password?.message}
                 </span>
               )}
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <div className="flex items-center h-5">
+                  <div className="flex h-5 items-center">
                     <input
                       id="remember"
                       aria-describedby="remember"
                       name="remember"
                       type="checkbox"
-                      className="w-4 h-4 bg-gray-50 rounded border-gray-300"
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-50"
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -184,20 +184,20 @@ export default function Signin() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                className="w-full rounded-lg bg-gray-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-400">
                 Sign In
               </button>
             </form>
             <div>
               <button
                 onClick={handleGoogleSignin}
-                className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2 mb-2">
+                className="mb-2 inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-transparent px-4 py-2 hover:bg-gray-100">
                 <Image width={20} height={20} alt="google" src="/google.svg" />
                 &nbsp;Sign in with Google
               </button>
               <button
                 onClick={handleGithubSignin}
-                className="w-full justify-center inline-flex items-center bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 px-4 py-2">
+                className="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-transparent px-4 py-2 hover:bg-gray-100">
                 <Image width={20} height={20} alt="github" src="/github.svg" />
                 &nbsp;Sign in with Github
               </button>

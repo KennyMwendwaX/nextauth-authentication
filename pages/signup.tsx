@@ -72,21 +72,21 @@ export default function Signup() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <a
           href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-          <Image className="w-8 h-8 mr-2" src={Img} alt="logo" />
+          className="mb-6 flex items-center text-2xl font-semibold text-gray-900">
+          <Image className="mr-2 h-8 w-8" src={Img} alt="logo" />
           Iconic
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-          <div className="p-6 space-y-3 md:space-y-5 sm:p-8">
+        <div className="w-full rounded-lg bg-white shadow dark:border sm:max-w-md md:mt-0 xl:p-0">
+          <div className="space-y-3 p-6 sm:p-8 md:space-y-5">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign up to have an account
             </h1>
             {serverErrors && (
               <div
-                className="p-4 mb-4 text-sm border border-red-600 text-red-800 rounded-lg bg-red-50"
+                className="mb-4 rounded-lg border border-red-600 bg-red-50 p-4 text-sm text-red-800"
                 role="alert">
                 {serverErrors[0]}
               </div>
@@ -97,7 +97,7 @@ export default function Signup() {
               <div className="relative">
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Name
                 </label>
                 <input
@@ -107,24 +107,24 @@ export default function Signup() {
                     errors.name?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   placeholder="John Doe"
                   required
                   {...register("name")}
                 />
-                <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
+                <span className="absolute bottom-2 right-0 flex cursor-pointer items-center pr-3 text-gray-600">
                   <HiUser size={20} />
                 </span>
               </div>
               {errors.name?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.name?.message}
                 </span>
               )}
               <div className="relative">
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Email
                 </label>
                 <input
@@ -134,24 +134,24 @@ export default function Signup() {
                     errors.email?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   placeholder="johndoe@gmail.com"
                   required
                   {...register("email")}
                 />
-                <span className="absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer text-gray-600">
+                <span className="absolute bottom-2 right-0 flex cursor-pointer items-center pr-3 text-gray-600">
                   <HiAtSymbol size={20} />
                 </span>
               </div>
               {errors.email?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.email?.message}
                 </span>
               )}
               <div className="relative">
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Password
                 </label>
                 <input
@@ -162,7 +162,7 @@ export default function Signup() {
                     errors.password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   required
                   {...register("password")}
                 />
@@ -170,19 +170,19 @@ export default function Signup() {
                   onClick={() => setShowPassword(!showPassword)}
                   className={`${
                     !showPassword ? `text-gray-600` : `text-blue-600`
-                  } absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer`}>
+                  } absolute bottom-2 right-0 flex cursor-pointer items-center pr-3`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
               {errors.password?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.password?.message}
                 </span>
               )}
               <div className="relative">
                 <label
                   htmlFor="confirm_password"
-                  className="block mb-2 text-sm font-medium text-gray-900">
+                  className="mb-2 block text-sm font-medium text-gray-900">
                   Confirm Password
                 </label>
                 <input
@@ -193,7 +193,7 @@ export default function Signup() {
                     errors.confirm_password?.message
                       ? `focus:border-red-600`
                       : `focus:border-gray-900`
-                  } bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:text-gray-900 focus:outline-none block w-full p-2`}
+                  } block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 focus:text-gray-900 focus:outline-none sm:text-sm`}
                   required
                   {...register("confirm_password")}
                 />
@@ -201,18 +201,18 @@ export default function Signup() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className={`${
                     !showConfirmPassword ? `text-gray-600` : `text-blue-600`
-                  } absolute bottom-2 right-0 pr-3 flex items-center cursor-pointer`}>
+                  } absolute bottom-2 right-0 flex cursor-pointer items-center pr-3`}>
                   <HiFingerPrint size={20} />
                 </span>
               </div>
               {errors.confirm_password?.message && (
-                <span className="text-red-600 text-xs">
+                <span className="text-xs text-red-600">
                   {errors.confirm_password?.message}
                 </span>
               )}
               <button
                 type="submit"
-                className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                className="w-full rounded-lg bg-gray-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-400">
                 Sign Up
               </button>
               <p className="text-sm font-light text-gray-500">
