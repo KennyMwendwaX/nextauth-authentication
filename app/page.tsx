@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
