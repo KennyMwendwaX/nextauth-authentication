@@ -59,7 +59,7 @@ export default function Signup() {
       setServerErrors("Server error, try again later");
     }
 
-    if (register.status === 201) {
+    if (register.ok) {
       // router.replace("/signin");
     }
   }
