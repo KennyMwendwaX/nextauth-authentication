@@ -1,17 +1,23 @@
-import type { ReactNode } from "react";
+"use client";
+import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
-import { useSession } from "next-auth/react";
 
-type LayoutProps = {
-  children: ReactNode;
-};
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const excludePaths = ["/signup", "/signin"];
 
-export default function Layout({ children }: LayoutProps) {
-  const { data: session, status } = useSession();
+  const excludedPaths = excludePaths.includes(pathname);
+
   return (
     <>
-      <Navbar session={session} />
-      {children}
+      {excludedPaths ? (
+        <>{children}</>
+      ) : (
+        <>
+          <Navbar />
+          {children}
+        </>
+      )}
     </>
   );
 }
