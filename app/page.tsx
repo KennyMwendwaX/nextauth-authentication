@@ -1,10 +1,12 @@
 "use client";
+import Navbar from "@/components/Navbar";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       {/* {status === "authenticated" ? ( */}
       <div className="pt-16">
         {/* Welcome {session?.user?.name}, {session?.user?.email} */}
