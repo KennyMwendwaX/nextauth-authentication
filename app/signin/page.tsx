@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signinFormSchema } from "@/utils/validate";
 import { signIn, useSession } from "next-auth/react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   email: string;
@@ -28,7 +28,7 @@ export default function Signin() {
   });
 
   //   const { data: session } = useSession();
-  //   const router = useRouter();
+  const router = useRouter();
 
   //   if (session) {
   //     router.replace("/");

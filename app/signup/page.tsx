@@ -1,5 +1,4 @@
 "use client";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Img from "@/public/image.jpg";
@@ -8,7 +7,7 @@ import { HiAtSymbol, HiFingerPrint, HiUser } from "react-icons/hi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupFormSchema } from "@/utils/validate";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 type FormValues = {
@@ -32,7 +31,7 @@ export default function Signup() {
   });
 
   //   const { data: session } = useSession();
-  //   const router = useRouter();
+  const router = useRouter();
 
   //   if (session) {
   //     router.replace("/");
@@ -60,7 +59,7 @@ export default function Signup() {
     }
 
     if (register.ok) {
-      // router.replace("/signin");
+      router.push("/signin");
     }
   }
 
