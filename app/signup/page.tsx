@@ -30,13 +30,13 @@ export default function Signup() {
     resolver: zodResolver(signupFormSchema),
   });
 
-  //   const { data: session } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
-  //   if (session) {
-  //     router.replace("/");
-  //     return null;
-  //   }
+  if (session) {
+    router.replace("/");
+    return null;
+  }
 
   async function onSubmit(values: FormValues) {
     const options = {

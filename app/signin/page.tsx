@@ -27,13 +27,13 @@ export default function Signin() {
     resolver: zodResolver(signinFormSchema),
   });
 
-  //   const { data: session } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
-  //   if (session) {
-  //     router.replace("/");
-  //     return null;
-  //   }
+  if (session) {
+    router.replace("/");
+    return null;
+  }
 
   async function onSubmit(values: FormValues) {
     try {

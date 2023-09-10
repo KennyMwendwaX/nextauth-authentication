@@ -7,10 +7,6 @@ import { HiOutlineLogout } from "react-icons/hi";
 import type { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 
-type NavbarProps = {
-  session: Session | null;
-};
-
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
