@@ -39,10 +39,16 @@ export default function Signup() {
   }
 
   async function onSubmit(values: FormValues) {
+    const payload = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    };
+
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+      body: JSON.stringify(payload),
     };
 
     const register = await fetch(
