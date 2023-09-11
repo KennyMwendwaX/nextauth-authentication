@@ -87,7 +87,7 @@ export default function Signup() {
               <div
                 className="mb-4 rounded-lg border border-red-600 bg-red-50 p-4 text-sm text-red-800"
                 role="alert">
-                {serverErrors[0]}
+                {serverErrors}
               </div>
             )}
             <form
