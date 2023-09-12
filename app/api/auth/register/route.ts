@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import * as bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
-  const res = await request.json();
-  const { name, email, password } = res;
+  const req = await request.json();
+  const { name, email, password } = req;
 
   try {
     // Check if the email is already registered
