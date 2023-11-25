@@ -79,7 +79,7 @@ export default function Signup() {
       <div className="mx-auto flex flex-col bg-gray-100 items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <a
           href="#"
-          className="p-4 flex items-center text-2xl font-semibold text-gray-400">
+          className="p-4 flex items-center text-2xl font-semibold text-black">
           <Image className="mr-2 h-8 w-8" src={Img} alt="logo" />
           Iconic
         </a>
