@@ -1,6 +1,8 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/public/logo-xs.png";
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useSession } from "next-auth/react";
@@ -18,11 +20,12 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed bg-gray-900 px-2 sm:px-4 py-3 w-full z-20 top-0 left-0">
+      <nav className="fixed bg-slate-800 px-2 sm:px-4 py-3 w-full z-20 top-0 left-0">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image src={Logo} width={30} height={30} alt="logo" />
             <span className="self-center text-gray-200 text-xl tracking-tight font-mono font-semibold whitespace-nowrap">
-              Iconic
+              Auth
             </span>
           </Link>
           {status === "authenticated" ? (
