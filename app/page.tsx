@@ -1,4 +1,5 @@
 "use client";
+
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -6,7 +7,7 @@ export default function Home() {
   const { data: session, status } = useSession();
 
   return (
-    <div className="bg-gray-800 min-h-screen">
+    <div className="min-h-screen">
       {status === "authenticated" ? (
         <div className="pt-20">
           Welcome Name: {session?.user?.name}, Email: {session?.user?.email}

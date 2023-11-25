@@ -25,7 +25,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <Image src={Logo} width={30} height={30} alt="logo" />
             <span className="self-center text-gray-200 text-xl tracking-tight font-mono font-semibold whitespace-nowrap">
-              Auth
+              Auth.js
             </span>
           </Link>
           {status === "authenticated" ? (
