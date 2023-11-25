@@ -75,9 +75,7 @@ export default function Signin() {
   return (
     <>
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 bg-gray-100 md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="p-4 flex items-center text-2xl font-semibold text-black">
+        <a href="#" className="p-4 flex items-center">
           <Image width={40} height={40} src={Logo} alt="logo" />
         </a>
         <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
