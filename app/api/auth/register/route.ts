@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import * as bcrypt from "bcrypt";
 import { Resend } from "resend";
 import VerifyEmail from "@/components/VerifyEmailTemplate";
-import crypto from "crypto";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -39,7 +38,7 @@ export async function POST(request: Request) {
 
     // Send email for verification
     const data = await resend.emails.send({
-      from: "kennymwendwa67@gmail.com",
+      from: "Auth <onboarding@resend.dev>",
       to: ["kennymwendwa67@gmail.com"], // Send the verification email to the user's email
       subject: "Account Verification",
       react: VerifyEmail({ verificationCode: verificationCode }),
@@ -67,6 +66,13 @@ export async function POST(request: Request) {
 }
 
 function generateVerificationCode(length = 6) {
-  const buffer = crypto.randomBytes(length);
-  return buffer.toString("hex").toUpperCase();
+  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let verificationCode = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    verificationCode += characters.charAt(randomIndex);
+  }
+
+  return verificationCode;
 }
