@@ -1,7 +1,10 @@
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
 import * as bcrypt from "bcrypt";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+import VerifyEmail from "@/components/VerifyEmailTemplate";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   const req = await request.json();
@@ -28,6 +31,14 @@ export async function POST(request: Request) {
         email: email,
         password: hashedPassword,
       },
+    });
+
+    // Send email for verification
+    const data = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: ["hi@gmail.com"], // Send the verification email to the user's email
+      subject: "Account Verification",
+      react: VerifyEmail({ verificationCode: "w1200ioyo" }),
     });
 
     // Return success message
