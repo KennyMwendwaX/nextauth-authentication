@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const excludePaths = ["/signup", "/signin"];
+  const excludePaths = ["/signup", "/signin", "/verify-email"];
 
   const excludedPaths = excludePaths.includes(pathname);
 
