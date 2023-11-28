@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
     // Send email for verification
     const data = await resend.emails.send({
-      from: "<onboarding@resend.dev>",
+      from: "kennymwendwa67@gmail.com",
       to: ["kennymwendwa67@gmail.com"], // Send the verification email to the user's email
       subject: "Account Verification",
       react: VerifyEmail({ verificationCode: verificationCode }),
@@ -58,6 +58,7 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Server error, try again later" },
       { status: 500 }
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
   }
 }
 
-function generateVerificationCode(length = 8) {
+function generateVerificationCode(length = 6) {
   const buffer = crypto.randomBytes(length);
   return buffer.toString("hex").toUpperCase();
 }
