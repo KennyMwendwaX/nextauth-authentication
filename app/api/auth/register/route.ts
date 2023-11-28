@@ -1,6 +1,7 @@
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
 import * as bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 export async function POST(request: Request) {
   const req = await request.json();

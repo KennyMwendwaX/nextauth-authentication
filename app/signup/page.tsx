@@ -70,7 +70,7 @@ export default function Signup() {
     }
 
     if (register.ok) {
-      router.push("/signin");
+      router.push("/email-verify");
     }
   }
 
