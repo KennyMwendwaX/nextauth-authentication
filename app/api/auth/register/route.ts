@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 }
 
 function generateVerificationCode(length = 6) {
-  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const characters = "0123456789";
   let verificationCode = "";
 
   for (let i = 0; i < length; i++) {
