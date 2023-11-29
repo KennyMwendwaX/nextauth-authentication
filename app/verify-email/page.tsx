@@ -1,5 +1,6 @@
 "use client";
 
+import { redirect, useSearchParams } from "next/navigation";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -22,7 +23,14 @@ const fieldNames = [
 ] as const;
 
 export default function VerifyEmail() {
+  const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm<FormData>();
+
+  const email = searchParams.get("email");
+
+  if (!email) {
+    redirect("/");
+  }
 
   const onSubmit = (data: FormData) => {
     const concatenatedCode = Object.values(data).join("");
@@ -40,7 +48,10 @@ export default function VerifyEmail() {
                   <p>Email Verification</p>
                 </div>
                 <div className="flex flex-row text-sm font-medium text-gray-400">
-                  <p>We have sent a code to your email ba**@dipainhouse.com</p>
+                  <div>
+                    We have sent a code to your email{" "}
+                    <span className="font-bold">{email}</span>
+                  </div>
                 </div>
               </div>
 
