@@ -1,7 +1,7 @@
 "use client";
 
-import { redirect, useSearchParams } from "next/navigation";
-import React from "react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 type FormData = {
@@ -24,7 +24,9 @@ const fieldNames = [
 
 export default function VerifyEmail() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { control, handleSubmit } = useForm<FormData>();
+  const [serverErrors, setServerErrors] = useState("");
 
   const email = searchParams.get("email");
 
@@ -32,9 +34,36 @@ export default function VerifyEmail() {
     redirect("/");
   }
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const code = Object.values(data).join("");
-    console.log(code);
+    const payload = {
+      code,
+      email,
+    };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    };
+
+    const register = await fetch("/api/auth/verify-email", options);
+
+    if (register.status === 404) {
+      setServerErrors("User not found");
+    }
+
+    if (register.status === 400) {
+      setServerErrors("Invalid or expired verification code");
+    }
+
+    if (register.status === 500) {
+      setServerErrors("Server error, try again later");
+    }
+
+    if (register.ok) {
+      router.push("/");
+    }
   };
 
   return (
