@@ -1,24 +1,32 @@
 "use client";
 
-import React, { useState, useRef, ChangeEvent } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+
+type FormData = {
+  code0: string;
+  code1: string;
+  code2: string;
+  code3: string;
+  code4: string;
+  code5: string;
+};
+
+const fieldNames = [
+  "code0",
+  "code1",
+  "code2",
+  "code3",
+  "code4",
+  "code5",
+] as const;
 
 export default function VerifyEmail() {
-  const [codes, setCodes] = useState(["", "", "", "", "", ""]);
-  const inputRefs = useRef<Array<HTMLInputElement | null>>(Array(6).fill(null));
+  const { control, handleSubmit } = useForm<FormData>();
 
-  const handleChange = (index: number, value: string) => {
-    const newCodes = [...codes];
-    newCodes[index] = value;
-
-    setCodes(newCodes);
-
-    if (
-      value !== "" &&
-      index < codes.length - 1 &&
-      inputRefs.current[index + 1]
-    ) {
-      inputRefs.current[index + 1]?.focus();
-    }
+  const onSubmit = (data: FormData) => {
+    const concatenatedCode = Object.values(data).join("");
+    console.log(concatenatedCode);
   };
 
   return (
@@ -37,20 +45,24 @@ export default function VerifyEmail() {
               </div>
 
               <div>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex flex-col space-y-16">
                     <div className="flex flex-row items-center justify-between mx-auto w-full max-w-md space-x-4">
-                      {codes.map((code, index) => (
+                      {fieldNames.map((fieldName, index) => (
                         <div key={index} className="w-16 h-16">
-                          <input
-                            ref={(el) => (inputRefs.current[index] = el)}
-                            className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                            type="text"
-                            value={code}
-                            maxLength={1}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                              handleChange(index, e.target.value)
-                            }
+                          <Controller
+                            control={control}
+                            name={fieldName}
+                            render={({ field }) => (
+                              <input
+                                {...field}
+                                className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                                type="text"
+                                maxLength={1}
+                                placeholder="0"
+                                // Additional input props as needed
+                              />
+                            )}
                           />
                         </div>
                       ))}
