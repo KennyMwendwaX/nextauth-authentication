@@ -33,8 +33,8 @@ export default function VerifyEmail() {
   }
 
   const onSubmit = (data: FormData) => {
-    const concatenatedCode = Object.values(data).join("");
-    console.log(concatenatedCode);
+    const code = Object.values(data).join("");
+    console.log(code);
   };
 
   return (
