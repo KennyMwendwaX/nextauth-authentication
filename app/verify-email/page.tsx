@@ -78,7 +78,7 @@ export default function VerifyEmail() {
       <div>
         <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
           <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-            <div className="mx-auto flex w-full max-w-md flex-col space-y-12">
+            <div className="mx-auto flex w-full max-w-md flex-col space-y-6">
               <div className="flex flex-col items-center justify-center text-center space-y-2">
                 <div className="font-semibold text-3xl">
                   <p>Email Verification</p>
@@ -90,6 +90,14 @@ export default function VerifyEmail() {
                   </div>
                 </div>
               </div>
+
+              {serverErrors && (
+                <div
+                  className="mb-4 rounded-lg border border-red-600 bg-red-50 p-4 text-sm text-red-800"
+                  role="alert">
+                  {serverErrors}
+                </div>
+              )}
 
               <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
