@@ -44,10 +44,19 @@ export async function POST(request: Request) {
       react: VerifyEmail({ verificationCode: verificationCode }),
     });
 
-    // Return success message
-    if (user) {
+    if (!data)
       return NextResponse.json(
-        { message: "User registered successfully. Verification email sent." },
+        { message: "Server error, try again later" },
+        { status: 500 }
+      );
+
+    // Return success message
+    if (user && data) {
+      return NextResponse.json(
+        {
+          message: "User registered successfully. Verification email sent.",
+          email: user.email,
+        },
         { status: 201 }
       );
     } else {

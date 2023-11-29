@@ -70,7 +70,9 @@ export default function Signup() {
     }
 
     if (register.ok) {
-      router.push("/verify-email");
+      const responseData = await register.json();
+      const email = responseData.email;
+      console.log(email);
     }
   }
 
