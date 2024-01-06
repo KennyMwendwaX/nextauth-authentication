@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import VerifyEmail from "@/components/VerifyEmailTemplate";
 

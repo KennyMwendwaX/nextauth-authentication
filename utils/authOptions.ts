@@ -4,7 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/utils/db";
-import { compare } from "bcrypt";
+import { compare } from "bcryptjs";
 
 type MyCredentials = {
   email: string;
@@ -46,9 +46,7 @@ export const authOptions: NextAuthOptions = {
           user.password && (await compare(credentials.password, user.password));
         if (!checkPassword) throw new Error("Email or password doesn't match");
 
-        return {
-          ...user,
-        };
+        return user;
       },
     }),
   ],
