@@ -70,9 +70,10 @@ export default function Signup() {
     }
 
     if (register.ok) {
-      const responseData = await register.json();
-      const email = responseData.email;
-      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
+      // const responseData = await register.json();
+      // const email = responseData.email;
+      // router.push(`/verify-email?email=${encodeURIComponent(email)}`);
+      router.push("/signin");
     }
   }
 

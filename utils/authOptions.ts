@@ -1,4 +1,4 @@
-import type { NextAuthOptions } from "next-auth";
+import type { DefaultSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
@@ -10,6 +10,15 @@ type MyCredentials = {
   email: string;
   password: string;
 };
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      role: "ADMIN" | "USER";
+    } & DefaultSession["user"];
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -50,6 +59,35 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ token, session }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+
+      if (token.role && session.user) {
+        session.user.role = token.role as "ADMIN" | "USER";
+      }
+
+      console.log(session);
+
+      return session;
+    },
+    async jwt({ token }) {
+      if (!token.sub) return token;
+
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          id: token.sub,
+        },
+      });
+
+      if (!existingUser) return token;
+
+      token.role = existingUser.role;
+      return token;
+    },
+  },
   session: {
     strategy: "jwt",
   },

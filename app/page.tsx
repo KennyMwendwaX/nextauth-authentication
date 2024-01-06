@@ -6,11 +6,14 @@ import Link from "next/link";
 export default function Home() {
   const { data: session, status } = useSession();
 
+  console.log(session?.user);
+
   return (
     <div className="min-h-screen">
       {status === "authenticated" ? (
         <div className="pt-20">
-          Welcome Name: {session?.user?.name}, Email: {session?.user?.email}
+          Welcome Name: {session?.user?.name}, Email: {session?.user?.email},
+          id: {session.user.id}, Role: {session.user.role}
           <button
             onClick={() => signOut()}
             className="ml-2 rounded-lg bg-blue-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-400">

@@ -4,7 +4,7 @@ import * as bcrypt from "bcryptjs";
 import { Resend } from "resend";
 import VerifyEmail from "@/components/VerifyEmailTemplate";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   const req = await request.json();
@@ -36,26 +36,26 @@ export async function POST(request: Request) {
       },
     });
 
-    // Send email for verification
-    const data = await resend.emails.send({
-      from: "Auth <onboarding@resend.dev>",
-      to: ["kennymwendwa67@gmail.com"], // Send the verification email to the user's email
-      subject: "Account Verification",
-      react: VerifyEmail({ verificationCode: verificationCode }),
-    });
+    // // Send email for verification
+    // const data = await resend.emails.send({
+    //   from: "Auth <onboarding@resend.dev>",
+    //   to: ["kennymwendwa67@gmail.com"], // Send the verification email to the user's email
+    //   subject: "Account Verification",
+    //   react: VerifyEmail({ verificationCode: verificationCode }),
+    // });
 
-    if (!data)
-      return NextResponse.json(
-        { message: "Server error, try again later" },
-        { status: 500 }
-      );
+    // if (!data)
+    //   return NextResponse.json(
+    //     { message: "Server error, try again later" },
+    //     { status: 500 }
+    //   );
 
     // Return success message
-    if (user && data) {
+    if (user) {
       return NextResponse.json(
         {
           message: "User registered successfully. Verification email sent.",
-          email: user.email,
+          // email: user.email,
         },
         { status: 201 }
       );
