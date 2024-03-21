@@ -4,54 +4,57 @@ import { useSession } from "next-auth/react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormData = {
-  code0: string;
-  code1: string;
-  code2: string;
-  code3: string;
-  code4: string;
-  code5: string;
-};
-
-const fieldNames = [
-  "code0",
-  "code1",
-  "code2",
-  "code3",
-  "code4",
-  "code5",
-] as const;
+const FormSchema = z.object({
+  otp: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
+  }),
+});
 
 export default function VerifyEmail() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { control, handleSubmit } = useForm<FormData>();
   const [serverErrors, setServerErrors] = useState("");
 
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // if (session && status === "authenticated") {
-  //   redirect("/");
-  // }
+  if (session && status === "authenticated") {
+    redirect("/");
+  }
 
-  // const email = searchParams.get("email");
+  const email = searchParams.get("email");
 
-  // if (!email) {
-  //   redirect("/");
-  // }
-  const email = "johnny@gmail.com";
-  const onSubmit = async (data: FormData) => {
-    const code = Object.values(data).join("");
-    const payload = {
-      code,
-      email,
-    };
+  if (!email) {
+    redirect("/");
+  }
 
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      otp: "",
+    },
+  });
+
+  const onSubmit = async (otp: z.infer<typeof FormSchema>) => {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(otp),
     };
 
     const register = await fetch("/api/auth/verify-email", options);
@@ -78,7 +81,7 @@ export default function VerifyEmail() {
       <div>
         <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
           <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-            <div className="mx-auto flex w-full max-w-md flex-col space-y-6">
+            <div className="mx-auto flex w-full max-w-md flex-col space-y-6 px-4">
               <div className="flex flex-col items-center justify-center text-center space-y-3">
                 <div className="text-3xl font-bold tracking-tight">
                   Email Verification
@@ -98,49 +101,66 @@ export default function VerifyEmail() {
                   {serverErrors}
                 </div>
               )}
+              <Form {...form}>
+                <div className="flex justify-center">
+                  <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <FormField
+                      control={form.control}
+                      name="otp"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <InputOTP maxLength={6} {...field}>
+                              <InputOTPGroup>
+                                <InputOTPSlot
+                                  index={0}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                                <InputOTPSlot
+                                  index={1}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                                <InputOTPSlot
+                                  index={2}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                                <InputOTPSlot
+                                  index={3}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                                <InputOTPSlot
+                                  index={4}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                                <InputOTPSlot
+                                  index={5}
+                                  className="w-16 h-16 text-2xl"
+                                />
+                              </InputOTPGroup>
+                            </InputOTP>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col space-y-16">
-                  <div className="flex flex-row items-center justify-between mx-auto w-full max-w-md space-x-4">
-                    {fieldNames.map((fieldName, index) => (
-                      <div key={index} className="w-16 h-16">
-                        <Controller
-                          control={control}
-                          name={fieldName}
-                          render={({ field }) => (
-                            <input
-                              {...field}
-                              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                              type="text"
-                              maxLength={1}
-                              placeholder="0"
-                              // Additional input props as needed
-                            />
-                          )}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-col space-y-5">
-                    <div>
-                      <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
-                        Verify Account
-                      </button>
-                    </div>
+                    <Button
+                      size="lg"
+                      className="mt-4 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium w-full">
+                      Verify Account
+                    </Button>
 
-                    <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                    <div className="mt-1 flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
                       <p>Didn&apos;t recieve code?</p>{" "}
                       <a
                         className="flex flex-row items-center text-blue-600"
-                        href="http://"
-                        target="_blank"
-                        rel="noopener noreferrer">
+                        href="/">
                         Resend
                       </a>
                     </div>
-                  </div>
+                  </form>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
