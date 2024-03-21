@@ -29,18 +29,18 @@ export default function VerifyEmail() {
   const { control, handleSubmit } = useForm<FormData>();
   const [serverErrors, setServerErrors] = useState("");
 
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
 
-  if (session && status === "authenticated") {
-    redirect("/");
-  }
+  // if (session && status === "authenticated") {
+  //   redirect("/");
+  // }
 
-  const email = searchParams.get("email");
+  // const email = searchParams.get("email");
 
-  if (!email) {
-    redirect("/");
-  }
-
+  // if (!email) {
+  //   redirect("/");
+  // }
+  const email = "johnny@gmail.com";
   const onSubmit = async (data: FormData) => {
     const code = Object.values(data).join("");
     const payload = {

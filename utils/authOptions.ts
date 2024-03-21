@@ -68,9 +68,6 @@ export const authOptions: NextAuthOptions = {
       if (token.role && session.user) {
         session.user.role = token.role as "ADMIN" | "USER";
       }
-
-      console.log(session);
-
       return session;
     },
     async jwt({ token }) {
